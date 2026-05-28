@@ -28,8 +28,12 @@ export function Navbar() {
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <a href="/" className="flex items-center gap-3 min-w-0 hover:opacity-90 transition">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-glow">
-                <Code2 className="h-5 w-5" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#0b0f19] border border-border/40 shadow-glow shrink-0">
+                <svg className="h-6 w-6" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 20V44L46 12" stroke="#10b981" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M22 48L50 20V36" stroke="#ef4444" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="32" cy="32" r="8" stroke="#e2e8f0" strokeWidth="4.5" fill="none"/>
+                </svg>
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -38,7 +42,7 @@ export function Navbar() {
                     v{APP_VERSION}
                   </span>
                   <span className={cn(
-                    "shrink-0 border text-[9px] px-1.5 py-0.5 rounded-none font-extrabold select-none uppercase tracking-wider transition-colors duration-200",
+                    "hidden sm:inline-flex shrink-0 border text-[9px] px-1.5 py-0.5 rounded-none font-extrabold select-none uppercase tracking-wider transition-colors duration-200",
                     mounted && isDark
                       ? "bg-white text-black border-white"
                       : "bg-black text-white border-black"
@@ -85,7 +89,7 @@ export function Navbar() {
                 asChild
                 variant="ghost"
                 size="sm"
-                className="text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
+                className="hidden md:inline-flex text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
               >
                 <a href="/docs?section=privacy-policy">
                   Privacy
@@ -96,7 +100,7 @@ export function Navbar() {
                 asChild
                 variant="ghost"
                 size="sm"
-                className="text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
+                className="hidden md:inline-flex text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
               >
                 <a href="/docs?section=license">
                   License
