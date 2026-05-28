@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Code2, Github, Home, Moon, Sun } from "lucide-react";
+import { Code2, Github, Home, Moon, Sun, Shield } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 import { APP_VERSION } from "@/lib/constants";
 import { env } from "@/lib/env";
+import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
+import { cn } from "@/lib/cn";
 
 export function Navbar() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -21,28 +23,35 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="bg-background sticky top-0 z-50 border-b border-border backdrop-blur-md">
+    <header className="bg-background/80 fixed top-0 left-0 right-0 z-50 border-b border-border backdrop-blur-md w-full">
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
-          <a href="/" className="flex items-center gap-3 min-w-0 hover:opacity-90 transition">
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-glow">
-              <Code2 className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <p className="truncate text-sm font-semibold">CodeDiff Pro</p>
-                <span className="shrink-0 bg-primary/10 text-primary border border-primary/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none">
-                  v{APP_VERSION}
-                </span>
-                <span className="shrink-0 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none uppercase tracking-wider">
-                  OPEN SOURCE
-                </span>
+          <div className="flex items-center gap-3 min-w-0">
+            <a href="/" className="flex items-center gap-3 min-w-0 hover:opacity-90 transition">
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-glow">
+                <Code2 className="h-5 w-5" />
               </div>
-              <p className="hidden text-xs text-muted-foreground sm:block">
-                Developer-grade code and file comparison
-              </p>
-            </div>
-          </a>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="truncate text-sm font-semibold">CodeDiff Pro</p>
+                  <span className="shrink-0 bg-primary/10 text-primary border border-primary/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none">
+                    v{APP_VERSION}
+                  </span>
+                  <span className={cn(
+                    "shrink-0 border text-[9px] px-1.5 py-0.5 rounded-none font-extrabold select-none uppercase tracking-wider transition-colors duration-200",
+                    mounted && isDark
+                      ? "bg-white text-black border-white"
+                      : "bg-black text-white border-black"
+                  )}>
+                    OPEN SOURCE
+                  </span>
+                </div>
+                <p className="hidden text-xs text-muted-foreground sm:block">
+                  Developer-grade code and file comparison
+                </p>
+              </div>
+            </a>
+          </div>
         </div>
         <nav className="flex items-center gap-2">
           {mounted && (
@@ -71,6 +80,28 @@ export function Navbar() {
                   </a>
                 </Button>
               )}
+
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
+              >
+                <a href="/docs?section=privacy-policy">
+                  Privacy
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
+              >
+                <a href="/docs?section=license">
+                  License
+                </a>
+              </Button>
             </>
           )}
 
