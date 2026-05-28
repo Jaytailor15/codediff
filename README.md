@@ -3,11 +3,25 @@
 [![Open Source](https://img.shields.io/badge/Open%20Source-Cohesive-115e59?style=for-the-badge&logo=github)](https://github.com/jaytailor15/codediff)
 [![License: Restrictive OS](https://img.shields.io/badge/License-Restrictive%20OS-115e59?style=for-the-badge)](file:///Users/pritugvcl/Documents/codediff/README.md#license-agreement)
 [![Privacy Policy: Local Sandbox](https://img.shields.io/badge/Privacy-100%25%20Local%20Sandbox-115e59?style=for-the-badge)](file:///Users/pritugvcl/Documents/codediff/README.md#privacy-policy)
-[![Next.js Version](https://img.shields.io/badge/Next.js-15.3.3-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org)
-[![React Version](https://img.shields.io/badge/React-19.1.0-blue?style=for-the-badge&logo=react)](https://react.dev)
-[![TypeScript Version](https://img.shields.io/badge/TypeScript-5.8.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.3-black?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Monaco Editor](https://img.shields.io/badge/Monaco_Editor-4.7.0-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)](https://github.com/suren-atoyan/monaco-react)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0.5-orange?style=for-the-badge)](https://zustand-demo.pmnd.rs)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.16.0-black?style=for-the-badge&logo=framer&logoColor=FF007F)](https://www.framer.com/motion/)
+[![Radix UI](https://img.shields.io/badge/Radix_UI-2.2.6-black?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
 
 CodeDiff Pro is a production-ready, high-fidelity developer workspace built for rapid side-by-side (split) and unified (inline) code comparison. Engineered with complete client-side sandboxing, dynamic Monaco Editor sizing, and theme-reactive aesthetics, CodeDiff Pro ensures your proprietary code is parsed safely, symmetrically, and efficiently entirely inside your browser environment.
+
+---
+
+## Symmetrical Brand Identity & Logo Philosophy
+
+The brand identity and favicon represent the core visual mechanics of code differences:
+- **Emerald Green Check Mark (`#10b981`)**: Represents successful code additions and clean insertions. It begins with a vertical top-left entry, sweeping downwards before ascending diagonally.
+- **Vibrant Red Reverse Check Mark (`#ef4444`)**: Represents code deletions and clean removals. It begins with a diagonal descent and transitions into a clean vertical exit.
+- **Centered Outline Circle (`#e2e8f0`)**: Positioned at the precise geometric center `(32, 32)` with an overlapping radius of `8`, it represents unified cohesion. A transparent interior ensures the parallel green and red line paths pass continuously and visibly through the circle, reflecting complete transparency and local execution.
 
 ---
 
@@ -126,18 +140,18 @@ npm run start
 
 CodeDiff Pro is structured strictly using Next.js App Router architectures and strict types.
 
-| Library / Dependency | Dynamic Version | Technical Utility |
-| :--- | :--- | :--- |
-| **Next.js (App Router)** | `15.3.3` | App Router framework, layout engines, and dynamic API routing |
-| **React** | `19.1.0` | React Server Components, client state trees, and hook lifecycles |
-| **TypeScript** | `5.8.3` | Strict-mode compile checks, type interfaces, and system contracts |
-| **Tailwind CSS** | `3.4.17` | Symmetrical glassmorphic design tokens and responsive classes |
-| **Monaco Editor React** | `4.7.0` | High-fidelity code editing panels, custom themes, and keybindings |
-| **Diff** | `8.0.2` | Character, word, line, and structured diff patch algorithms |
-| **Zustand** | `5.0.5` | Persisted client-side workspace state and comparison history |
-| **Framer Motion** | `12.16.0` | Restrained UI micro-animations and panel transitions |
-| **Radix UI** | `2.2.6` / `1.2.6` | Accessible keyboard navigation primitives (Select, Switch, Toast) |
-| **Lucide Icons** | `0.511.0` | Consistent, lightweight vector icon assets |
+| Library / Dependency | Visual Badge / Tag | Dynamic Version | Technical Utility |
+| :--- | :--- | :--- | :--- |
+| **Next.js (App Router)** | ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=nextdotjs&logoColor=white) | `15.3.3` | App Router framework, layout engines, and dynamic API routing |
+| **React** | ![React](https://img.shields.io/badge/React-blue?style=flat-square&logo=react&logoColor=white) | `19.1.0` | React Server Components, client state trees, and hook lifecycles |
+| **TypeScript** | ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white) | `5.8.3` | Strict-mode compile checks, type interfaces, and system contracts |
+| **Tailwind CSS** | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white) | `3.4.17` | Symmetrical glassmorphic design tokens and responsive classes |
+| **Monaco Editor React** | ![Monaco Editor](https://img.shields.io/badge/Monaco_Editor-007ACC?style=flat-square&logo=visual-studio-code&logoColor=white) | `4.7.0` | High-fidelity code editing panels, custom themes, and keybindings |
+| **Diff** | ![Diff](https://img.shields.io/badge/Diff-grey?style=flat-square) | `8.0.2` | Character, word, line, and structured diff patch algorithms |
+| **Zustand** | ![Zustand](https://img.shields.io/badge/Zustand-orange?style=flat-square) | `5.0.5` | Persisted client-side workspace state and comparison history |
+| **Framer Motion** | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=flat-square&logo=framer&logoColor=white) | `12.16.0` | Restrained UI micro-animations and panel transitions |
+| **Radix UI** | ![Radix UI](https://img.shields.io/badge/Radix_UI-black?style=flat-square&logo=radix-ui&logoColor=white) | `2.2.6` / `1.2.6` | Accessible keyboard navigation primitives (Select, Switch, Toast) |
+| **Lucide Icons** | ![Lucide](https://img.shields.io/badge/Lucide-black?style=flat-square&logo=feather&logoColor=white) | `0.511.0` | Consistent, lightweight vector icon assets |
 
 ---
 
