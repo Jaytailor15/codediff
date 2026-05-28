@@ -418,7 +418,7 @@ export default function DocumentationPage() {
           </div>
 
           {/* Main Doc Contents Area taking full remaining layout height */}
-          <main className="flex-1 min-w-0 bg-card/10 p-5 md:p-8 overflow-y-auto h-[calc(100vh-11rem)] lg:h-[calc(100vh-9.5rem)] custom-scrollbar">
+          <main className="flex-1 min-w-0 bg-card/10 p-4 sm:p-5 md:p-8 overflow-y-auto h-[calc(100vh-11rem)] lg:h-[calc(100vh-9.5rem)] custom-scrollbar">
             
             {activeSection === "getting-started" && (
               <div className="space-y-6">
@@ -498,7 +498,7 @@ export default function DocumentationPage() {
                     <p>
                       CodeDiff Pro follows strict <strong>Semantic Versioning (SemVer)</strong> rules. This guarantees stable visual integrations, structured ignorable transforms, and localized Monaco settings:
                     </p>
-                    <div className="grid grid-cols-2 gap-4 text-xs font-semibold pt-1 border-t border-border/40">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold pt-1 border-t border-border/40">
                       <div>
                         <span className="block text-[10px] text-muted-foreground font-normal">Active Environment Version</span>
                         <span className="text-foreground font-mono">v{env.appVersion}</span>
@@ -1156,65 +1156,67 @@ export default function DocumentationPage() {
                   </p>
                 </div>
 
-                <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm">
-                  <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
-                    <div>Operation Class</div>
-                    <div>Description</div>
-                    <div>Visual Theme Highlight</div>
-                  </div>
-
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
-                    <div className="font-bold text-emerald-500 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-glow shadow-emerald-500/30" />
-                      Addition
+                <div className="w-full overflow-x-auto custom-scrollbar">
+                  <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm min-w-[650px] lg:min-w-0">
+                    <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
+                      <div>Operation Class</div>
+                      <div>Description</div>
+                      <div>Visual Theme Highlight</div>
                     </div>
-                    <div className="text-muted-foreground">New variables, features, or lines added to the document.</div>
-                    <div><span className="text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Green Line Marker</span></div>
-                  </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
-                    <div className="font-bold text-rose-500 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-glow shadow-rose-500/30" />
-                      Deletion
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
+                      <div className="font-bold text-emerald-500 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-glow shadow-emerald-500/30" />
+                        Addition
+                      </div>
+                      <div className="text-muted-foreground">New variables, features, or lines added to the document.</div>
+                      <div><span className="text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Green Line Marker</span></div>
                     </div>
-                    <div className="text-muted-foreground">Code block segments that have been excised or deleted.</div>
-                    <div><span className="text-rose-500 bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Red Line Marker</span></div>
-                  </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
-                    <div className="font-bold text-blue-500 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-blue-500/80 shadow-glow shadow-blue-500/30" />
-                      Update
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
+                      <div className="font-bold text-rose-500 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-glow shadow-rose-500/30" />
+                        Deletion
+                      </div>
+                      <div className="text-muted-foreground">Code block segments that have been excised or deleted.</div>
+                      <div><span className="text-rose-500 bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Red Line Marker</span></div>
                     </div>
-                    <div className="text-muted-foreground">Inline variable adjustments, typos fixed, or simple parameter changes.</div>
-                    <div><span className="text-blue-500 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Inline Character highlight</span></div>
-                  </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
-                    <div className="font-bold text-amber-500 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-glow shadow-amber-500/30" />
-                      Move
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
+                      <div className="font-bold text-blue-500 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-blue-500/80 shadow-glow shadow-blue-500/30" />
+                        Update
+                      </div>
+                      <div className="text-muted-foreground">Inline variable adjustments, typos fixed, or simple parameter changes.</div>
+                      <div><span className="text-blue-500 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Inline Character highlight</span></div>
                     </div>
-                    <div className="text-muted-foreground">A section cut and pasted elsewhere. Eliminates noisy add/delete alerts.</div>
-                    <div><span className="text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Mapped Moves List</span></div>
-                  </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
-                    <div className="font-bold text-purple-500 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-purple-500/80 shadow-glow shadow-purple-500/30" />
-                      Duplicate Copy
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
+                      <div className="font-bold text-amber-500 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-glow shadow-amber-500/30" />
+                        Move
+                      </div>
+                      <div className="text-muted-foreground">A section cut and pasted elsewhere. Eliminates noisy add/delete alerts.</div>
+                      <div><span className="text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Mapped Moves List</span></div>
                     </div>
-                    <div className="text-muted-foreground">Repetitive boilerplate code segments duplicated across the codebase.</div>
-                    <div><span className="text-purple-500 bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Boilerplate Alert</span></div>
-                  </div>
 
-                  <div className="grid grid-cols-3 p-3.5 items-center leading-relaxed">
-                    <div className="font-bold text-indigo-500 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-indigo-500/80 shadow-glow shadow-indigo-500/30" />
-                      Find / Replace
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center leading-relaxed">
+                      <div className="font-bold text-purple-500 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-purple-500/80 shadow-glow shadow-purple-500/30" />
+                        Duplicate Copy
+                      </div>
+                      <div className="text-muted-foreground">Repetitive boilerplate code segments duplicated across the codebase.</div>
+                      <div><span className="text-purple-500 bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Boilerplate Alert</span></div>
                     </div>
-                    <div className="text-muted-foreground">Identical token substitutions repeating sequentially across three or more lines.</div>
-                    <div><span className="text-indigo-500 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Mass Token Mapping</span></div>
+
+                    <div className="grid grid-cols-3 p-3.5 items-center leading-relaxed">
+                      <div className="font-bold text-indigo-500 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-indigo-500/80 shadow-glow shadow-indigo-500/30" />
+                        Find / Replace
+                      </div>
+                      <div className="text-muted-foreground">Identical token substitutions repeating sequentially across three or more lines.</div>
+                      <div><span className="text-indigo-500 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded font-extrabold text-[10px]">Mass Token Mapping</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1331,63 +1333,65 @@ export default function DocumentationPage() {
                     <Settings2 className="h-4 w-4 text-primary" />
                     Workspace Control Hotkeys
                   </h3>
-                  <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm">
-                    <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
-                      <div>Workspace Hotkey</div>
-                      <div>Key Trigger Combination</div>
-                      <div>Workspace Action</div>
-                    </div>
+                  <div className="w-full overflow-x-auto custom-scrollbar">
+                    <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm min-w-[650px] lg:min-w-0">
+                      <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
+                        <div>Workspace Hotkey</div>
+                        <div>Key Trigger Combination</div>
+                        <div>Workspace Action</div>
+                      </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground flex items-center gap-1.5">
-                        <GitCompareArrows className="h-4.5 w-4.5 text-primary" />
-                        <span>Compare Code</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground flex items-center gap-1.5">
+                          <GitCompareArrows className="h-4.5 w-4.5 text-primary" />
+                          <span>Compare Code</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Enter</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Force-trigger code comparison manually.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Enter</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Force-trigger code comparison manually.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground flex items-center gap-1.5">
-                        <Eraser className="h-4.5 w-4.5 text-primary" />
-                        <span>Clear Canvas</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground flex items-center gap-1.5">
+                          <Eraser className="h-4.5 w-4.5 text-primary" />
+                          <span>Clear Canvas</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">D</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Clear current editor inputs and reset variables.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">D</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Clear current editor inputs and reset variables.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground flex items-center gap-1.5">
-                        <Clipboard className="h-4.5 w-4.5 text-primary" />
-                        <span>Copy Unified Patch</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground flex items-center gap-1.5">
+                          <Clipboard className="h-4.5 w-4.5 text-primary" />
+                          <span>Copy Unified Patch</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">C</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Generate and copy unified `.diff` patch immediately.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">C</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Generate and copy unified `.diff` patch immediately.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 p-3.5 items-center">
-                      <div className="font-bold text-foreground flex items-center gap-1.5">
-                        <Minimize2 className="h-4.5 w-4.5 text-primary" />
-                        <span>Exit Fullscreen</span>
+                      <div className="grid grid-cols-3 p-3.5 items-center">
+                        <div className="font-bold text-foreground flex items-center gap-1.5">
+                          <Minimize2 className="h-4.5 w-4.5 text-primary" />
+                          <span>Exit Fullscreen</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Esc</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Reset fullscreen focus view and restore sidebars.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Esc</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Reset fullscreen focus view and restore sidebars.</div>
                     </div>
                   </div>
                 </div>
@@ -1398,99 +1402,101 @@ export default function DocumentationPage() {
                     <Code className="h-4 w-4 text-primary" />
                     Monaco Power-Editor Built-in Hotkeys
                   </h3>
-                  <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm">
-                    <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
-                      <div>Monaco Action</div>
-                      <div>Key Trigger Combination</div>
-                      <div>Workspace Utility</div>
-                    </div>
+                  <div className="w-full overflow-x-auto custom-scrollbar">
+                    <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm min-w-[650px] lg:min-w-0">
+                      <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
+                        <div>Monaco Action</div>
+                        <div>Key Trigger Combination</div>
+                        <div>Workspace Utility</div>
+                      </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Command Palette</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Command Palette</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F1</kbd>
+                          <span className="text-muted-foreground">or</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F1</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Access all editor commands, configurations, and actions.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F1</kbd>
-                        <span className="text-muted-foreground">or</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F1</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Access all editor commands, configurations, and actions.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Find Text</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Find Text</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Open the search bar to locate specific tokens or phrases.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Open the search bar to locate specific tokens or phrases.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Replace Text</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Replace Text</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">H</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Search and replace matching substrings in the active canvas.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">H</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Search and replace matching substrings in the active canvas.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Toggle Comment</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Toggle Comment</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">/</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Comment or uncomment the currently active code line.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">/</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Comment or uncomment the currently active code line.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Multi-Cursor Placement</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Multi-Cursor Placement</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt/Option</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <span className="text-muted-foreground font-semibold text-[10px]">Click</span>
+                        </div>
+                        <div className="text-muted-foreground">Spawn secondary insertion points for concurrent editing.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt/Option</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <span className="text-muted-foreground font-semibold text-[10px]">Click</span>
-                      </div>
-                      <div className="text-muted-foreground">Spawn secondary insertion points for concurrent editing.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Format Document</span>
+                      <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Format Document</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Prettify and format the selected code structure dynamically.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Prettify and format the selected code structure dynamically.</div>
-                    </div>
 
-                    <div className="grid grid-cols-3 p-3.5 items-center">
-                      <div className="font-bold text-foreground">
-                        <span>Autocomplete Suggestions</span>
+                      <div className="grid grid-cols-3 p-3.5 items-center">
+                        <div className="font-bold text-foreground">
+                          <span>Autocomplete Suggestions</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                          <span className="text-muted-foreground">+</span>
+                          <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Space</kbd>
+                        </div>
+                        <div className="text-muted-foreground">Trigger intelligent autocompletion and type suggestions.</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                        <span className="text-muted-foreground">+</span>
-                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Space</kbd>
-                      </div>
-                      <div className="text-muted-foreground">Trigger intelligent autocompletion and type suggestions.</div>
                     </div>
                   </div>
                 </div>
@@ -1541,7 +1547,7 @@ export default function DocumentationPage() {
                       <span className="text-[10px] font-extrabold uppercase text-muted-foreground tracking-wider">Project Identity</span>
                       <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 bg-emerald-500/10 text-emerald-500 rounded border border-emerald-500/20">Verified</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 text-xs font-semibold">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold">
                       <div>
                         <span className="block text-[10px] text-muted-foreground font-normal">Author, Founder & Owner</span>
                         <span className="text-foreground">Jay Tailor</span>
