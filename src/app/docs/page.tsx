@@ -64,18 +64,26 @@ import {
   ShieldAlert,
   ArrowRight,
   Binary,
-  Hammer
+  Hammer,
+  Shield,
+  Scale,
+  Lock,
+  Globe,
+  Award,
+  FileSpreadsheet,
+  Gift
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { env } from "@/lib/env";
 import { DESIGN_TOKENS } from "@/lib/style-config";
 import { cn } from "@/lib/cn";
+import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 
 interface DocSection {
   id: string;
   title: string;
-  category: "guide" | "tools" | "systems" | "reference";
+  category: "guide" | "tools" | "systems" | "reference" | "legal";
   icon: any;
   badge?: string;
 }
@@ -90,7 +98,9 @@ const docSections: DocSection[] = [
   { id: "gitclear-rich", title: "GitClear Operations", category: "systems", icon: GitPullRequestArrow, badge: "AI Logic" },
   { id: "theme-engine", title: "Universal Theme Engine", category: "systems", icon: Sparkles, badge: "Cohesive" },
   { id: "open-source", title: "Open Source & Env", category: "systems", icon: Github },
-  { id: "keyboard-shortcuts", title: "Keyboard Shortcuts", category: "reference", icon: Keyboard }
+  { id: "keyboard-shortcuts", title: "Keyboard Shortcuts", category: "reference", icon: Keyboard },
+  { id: "privacy-policy", title: "Privacy Policy", category: "legal", icon: Shield },
+  { id: "license", title: "License Agreement", category: "legal", icon: Scale }
 ];
 
 export default function DocumentationPage() {
@@ -107,6 +117,14 @@ export default function DocumentationPage() {
 
   useEffect(() => {
     setMounted(true);
+    // Parse query params to set active section dynamically
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const sectionParam = params.get("section");
+      if (sectionParam) {
+        setActiveSection(sectionParam);
+      }
+    }
   }, []);
 
   const startLeftResize = useCallback((mouseDownEvent: React.MouseEvent) => {
@@ -146,41 +164,72 @@ export default function DocumentationPage() {
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.08),transparent_40rem),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.05),transparent_48rem),linear-gradient(180deg,hsl(var(--background)),hsl(var(--background)))] text-foreground selection:bg-primary/20 antialiased transition-colors duration-200">
       
       {/* Top Header Navigation */}
-      <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md transition-all">
+      <header className="fixed top-0 left-0 right-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md transition-all">
         <div className="container flex h-16 items-center justify-between gap-4 max-w-none px-4 lg:px-6">
           <div className="flex min-w-0 items-center gap-3">
-            <a href="/" className="flex items-center gap-3 min-w-0 hover:opacity-90 transition">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-glow">
-                <Code2 className="h-5 w-5" />
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <p className="truncate text-sm font-bold tracking-tight">CodeDiff Pro</p>
-                  <span className="shrink-0 bg-primary/10 text-primary border border-primary/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none">
-                    v{env.appVersion}
-                  </span>
-                  <span className="shrink-0 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none uppercase tracking-wider">
-                    OPEN SOURCE
-                  </span>
+            <div className="flex items-center gap-3 min-w-0">
+              <a href="/" className="flex items-center gap-3 min-w-0 hover:opacity-90 transition">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-glow">
+                  <Code2 className="h-5 w-5" />
                 </div>
-                <p className="hidden text-xs text-muted-foreground sm:block">
-                  Interactive Developer Documentation
-                </p>
-              </div>
-            </a>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="truncate text-sm font-bold tracking-tight">CodeDiff Pro</p>
+                    <span className="shrink-0 bg-primary/10 text-primary border border-primary/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none">
+                      v{env.appVersion}
+                    </span>
+                    <span className={cn(
+                      "shrink-0 border text-[9px] px-1.5 py-0.5 rounded-none font-extrabold select-none uppercase tracking-wider transition-colors duration-200",
+                      mounted && isDark
+                        ? "bg-white text-black border-white"
+                        : "bg-black text-white border-black"
+                    )}>
+                      OPEN SOURCE
+                    </span>
+                  </div>
+                  <p className="hidden text-xs text-muted-foreground sm:block">
+                    Interactive Developer Documentation
+                  </p>
+                </div>
+              </a>
+            </div>
           </div>
           
           <div className="flex items-center gap-2">
             {mounted && (
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Toggle color theme"
-                onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="h-8 w-8 rounded-md"
-              >
-                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </Button>
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
+                >
+                  <a href="/docs?section=privacy-policy">
+                    Privacy
+                  </a>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs text-muted-foreground hover:text-foreground font-semibold h-8"
+                >
+                  <a href="/docs?section=license">
+                    License
+                  </a>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Toggle color theme"
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                  className="h-8 w-8 rounded-md"
+                >
+                  {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                </Button>
+              </>
             )}
 
             <Button asChild variant="outline" size="sm" className="gap-1.5 h-8 text-xs font-semibold hover:bg-secondary/85">
@@ -194,7 +243,7 @@ export default function DocumentationPage() {
       </header>
 
       {/* Main Full-Width Immersive Documentation Container */}
-      <div className="w-full px-4 lg:px-6 py-5">
+      <div className="w-full px-4 lg:px-6 pb-5 pt-[84px]">
         <div className="flex flex-col lg:flex-row gap-0 items-stretch border border-border bg-card/25 rounded-xl shadow-md overflow-hidden backdrop-blur-md w-full">
           
           {/* Symmetrical Left Resizable Sidebar (Desktop Only) */}
@@ -280,6 +329,16 @@ export default function DocumentationPage() {
                     <p className={DESIGN_TOKENS.typography.headerMuted}>SHORTCUTS & REFERENCES</p>
                     <div className="flex flex-col gap-1">
                       {groupSections("reference").map((sec) => (
+                        <SidebarButton key={sec.id} sec={sec} active={activeSection === sec.id} onClick={setActiveSection} />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Category: Legal & Agreements */}
+                  <div className="space-y-1.5">
+                    <p className={DESIGN_TOKENS.typography.headerMuted}>LEGAL & AGREEMENTS</p>
+                    <div className="flex flex-col gap-1">
+                      {groupSections("legal").map((sec) => (
                         <SidebarButton key={sec.id} sec={sec} active={activeSection === sec.id} onClick={setActiveSection} />
                       ))}
                     </div>
@@ -418,6 +477,34 @@ export default function DocumentationPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     CodeDiff Pro values your privacy. Unlike legacy checkers that transmit files to external web servers, our static comparison algorithm compiles, parses, and formats diff indicators directly within your local browser sandbox. Your proprietary source code never leaves your computer.
                   </p>
+                </div>
+
+                {/* Symmetrical App Versioning & Project Identity */}
+                <div className="border border-border/60 rounded-lg overflow-hidden bg-background/30 text-xs shadow-sm">
+                  <div className="bg-secondary/40 border-b border-border/50 p-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Bookmark className="h-4 w-4 text-primary" />
+                      <span className="font-bold text-foreground uppercase tracking-wider text-[10px]">Versioning & Release Details</span>
+                    </div>
+                    <span className="bg-primary/15 text-primary border border-primary/20 text-[9px] px-1.5 py-0.5 rounded-full font-extrabold select-none">
+                      Active: v{env.appVersion}
+                    </span>
+                  </div>
+                  <div className="p-3.5 space-y-3 leading-relaxed text-muted-foreground">
+                    <p>
+                      CodeDiff Pro follows strict <strong>Semantic Versioning (SemVer)</strong> rules. This guarantees stable visual integrations, structured ignorable transforms, and localized Monaco settings:
+                    </p>
+                    <div className="grid grid-cols-2 gap-4 text-xs font-semibold pt-1 border-t border-border/40">
+                      <div>
+                        <span className="block text-[10px] text-muted-foreground font-normal">Active Environment Version</span>
+                        <span className="text-foreground font-mono">v{env.appVersion}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] text-muted-foreground font-normal">Release Channel</span>
+                        <span className="text-foreground">Official Open Source Release</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -1222,7 +1309,7 @@ export default function DocumentationPage() {
             )}
 
             {activeSection === "keyboard-shortcuts" && (
-              <div className="space-y-6">
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-3 duration-200">
                 <div>
                   <div className="flex items-center gap-2 text-primary mb-1">
                     <Keyboard className="h-4 w-4" />
@@ -1234,63 +1321,305 @@ export default function DocumentationPage() {
                   </p>
                 </div>
 
-                <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm">
-                  <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
-                    <div>Workspace Hotkey</div>
-                    <div>Key Trigger Combination</div>
-                    <div>Workspace Action</div>
+                {/* Section A: Custom Workspace Control Hotkeys */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <Settings2 className="h-4 w-4 text-primary" />
+                    Workspace Control Hotkeys
+                  </h3>
+                  <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm">
+                    <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
+                      <div>Workspace Hotkey</div>
+                      <div>Key Trigger Combination</div>
+                      <div>Workspace Action</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground flex items-center gap-1.5">
+                        <GitCompareArrows className="h-4.5 w-4.5 text-primary" />
+                        <span>Compare Code</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Enter</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Force-trigger code comparison manually.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground flex items-center gap-1.5">
+                        <Eraser className="h-4.5 w-4.5 text-primary" />
+                        <span>Clear Canvas</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">D</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Clear current editor inputs and reset variables.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground flex items-center gap-1.5">
+                        <Clipboard className="h-4.5 w-4.5 text-primary" />
+                        <span>Copy Unified Patch</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">C</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Generate and copy unified `.diff` patch immediately.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 p-3.5 items-center">
+                      <div className="font-bold text-foreground flex items-center gap-1.5">
+                        <Minimize2 className="h-4.5 w-4.5 text-primary" />
+                        <span>Exit Fullscreen</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Esc</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Reset fullscreen focus view and restore sidebars.</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section B: Monaco Power-Editor Keybindings */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <Code className="h-4 w-4 text-primary" />
+                    Monaco Power-Editor Built-in Hotkeys
+                  </h3>
+                  <div className="border border-border rounded-lg overflow-hidden bg-background/55 text-xs shadow-sm">
+                    <div className="grid grid-cols-3 bg-secondary/80 border-b border-border p-3 font-bold text-foreground uppercase tracking-wider text-[9px]">
+                      <div>Monaco Action</div>
+                      <div>Key Trigger Combination</div>
+                      <div>Workspace Utility</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Command Palette</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F1</kbd>
+                        <span className="text-muted-foreground">or</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F1</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Access all editor commands, configurations, and actions.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Find Text</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Open the search bar to locate specific tokens or phrases.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Replace Text</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">H</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Search and replace matching substrings in the active canvas.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Toggle Comment</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">/</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Comment or uncomment the currently active code line.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Multi-Cursor Placement</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt/Option</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <span className="text-muted-foreground font-semibold text-[10px]">Click</span>
+                      </div>
+                      <div className="text-muted-foreground">Spawn secondary insertion points for concurrent editing.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Format Document</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Alt</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">F</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Prettify and format the selected code structure dynamically.</div>
+                    </div>
+
+                    <div className="grid grid-cols-3 p-3.5 items-center">
+                      <div className="font-bold text-foreground">
+                        <span>Autocomplete Suggestions</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
+                        <span className="text-muted-foreground">+</span>
+                        <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Space</kbd>
+                      </div>
+                      <div className="text-muted-foreground">Trigger intelligent autocompletion and type suggestions.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSection === "privacy-policy" && (
+              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-200">
+                <div>
+                  <div className="flex items-center gap-2 text-primary mb-1">
+                    <Shield className="h-4 w-4" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Privacy Protocol</span>
+                  </div>
+                  <h1 className="text-2xl font-bold tracking-tight text-foreground">Privacy Policy</h1>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    CodeDiff Pro is architected with a strict privacy-first framework. All code processing and difference analysis occur entirely locally within your browser sandbox.
+                  </p>
+                </div>
+
+                <div className="border-t border-border pt-4 space-y-6">
+                  {/* Local Processing */}
+                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-4 flex gap-3.5">
+                    <div className="h-7 w-7 rounded bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
+                      <Lock className="h-4 w-4" />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-bold text-foreground">Local Execution Sandbox</h4>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        Your source code never leaves your computer. Symmetrical file comparison, ignore transforms, font customizers, and clipboard export integrations are evaluated completely client-side. We do not transmit raw snippets or analytics payloads to external endpoints.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                    <div className="font-bold text-foreground flex items-center gap-1.5">
-                      <GitCompareArrows className="h-4.5 w-4.5 text-primary" />
-                      <span>Compare Code</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                      <span className="text-muted-foreground">+</span>
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Enter</kbd>
-                    </div>
-                    <div className="text-muted-foreground">Force-trigger code comparison manually.</div>
+                  {/* Cookies and Storage */}
+                  <div className="space-y-2">
+                    <h3 className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                      <Globe className="h-4 w-4 text-primary" />
+                      Client-Side Storage
+                    </h3>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                      We utilize standard local Web Storage APIs (Local Storage) strictly to preserve user interface state toggles (such as resolution view, tab configuration, and custom ignore lists) across workspace refreshes. No tracking cookies or analytical scripts are integrated into this application.
+                    </p>
                   </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                    <div className="font-bold text-foreground flex items-center gap-1.5">
-                      <Eraser className="h-4.5 w-4.5 text-primary" />
-                      <span>Clear Canvas</span>
+                  {/* Authorship */}
+                  <div className="bg-secondary/20 border border-border/60 rounded-lg p-4 space-y-3">
+                    <div className="flex items-center justify-between border-b border-border/40 pb-2">
+                      <span className="text-[10px] font-extrabold uppercase text-muted-foreground tracking-wider">Project Identity</span>
+                      <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 bg-emerald-500/10 text-emerald-500 rounded border border-emerald-500/20">Verified</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                      <span className="text-muted-foreground">+</span>
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">D</kbd>
+                    <div className="grid grid-cols-2 gap-4 text-xs font-semibold">
+                      <div>
+                        <span className="block text-[10px] text-muted-foreground font-normal">Author, Founder & Owner</span>
+                        <span className="text-foreground">Jay Tailor</span>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] text-muted-foreground font-normal">GitHub Profile</span>
+                        <span className="text-primary hover:underline">@jaytailor15</span>
+                      </div>
                     </div>
-                    <div className="text-muted-foreground">Clear current editor inputs and reset variables.</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSection === "license" && (
+              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-200">
+                <div>
+                  <div className="flex items-center gap-2 text-primary mb-1">
+                    <Scale className="h-4 w-4" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Agreement</span>
+                  </div>
+                  <h1 className="text-2xl font-bold tracking-tight text-foreground">License Agreement</h1>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    By accessing, downloading, or deploying the CodeDiff Pro repository, you agree to comply with these exclusive licensing structures.
+                  </p>
+                </div>
+
+                <div className="border-t border-border pt-4 space-y-6">
+                  {/* Strict Restriction Warning */}
+                  <div className="bg-amber-500/5 border border-amber-500/15 rounded-lg p-4 flex gap-3.5">
+                    <div className="h-7 w-7 rounded bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0 mt-0.5">
+                      <ShieldAlert className="h-4 w-4" />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-bold text-foreground text-amber-600 dark:text-amber-500 font-bold">Strict Cloning and Distribution Restriction</h4>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        Cloning or copying this codebase is permitted strictly for contributing back to the official open-source repository via Pull Requests. <strong>Under no circumstances may any contributor, user, or third-party clone, download, or distribute this repository to host it as a private repository or proprietary product.</strong>
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-3 border-b border-border/40 p-3.5 items-center">
-                    <div className="font-bold text-foreground flex items-center gap-1.5">
-                      <Clipboard className="h-4.5 w-4.5 text-primary" />
-                      <span>Copy Unified Patch</span>
+                  {/* Core License Terms */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="border border-border/80 rounded-lg p-4 bg-background/40 space-y-1.5 shadow-sm">
+                      <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                        <Award className="h-3.5 w-3.5 text-primary" />
+                        Exclusive Owner Rights
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        Founder Jay Tailor (@jaytailor15) maintains absolute administrative access, deployment authorization, and intellectual governance over the codebase.
+                      </p>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Cmd/Ctrl</kbd>
-                      <span className="text-muted-foreground">+</span>
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Shift</kbd>
-                      <span className="text-muted-foreground">+</span>
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">C</kbd>
-                    </div>
-                    <div className="text-muted-foreground">Generate and copy unified `.diff` patch immediately.</div>
-                  </div>
 
-                  <div className="grid grid-cols-3 p-3.5 items-center">
-                    <div className="font-bold text-foreground flex items-center gap-1.5">
-                      <Minimize2 className="h-4.5 w-4.5 text-primary" />
-                      <span>Exit Fullscreen</span>
+                    <div className="border border-border/80 rounded-lg p-4 bg-background/40 space-y-1.5 shadow-sm">
+                      <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                        <FileSpreadsheet className="h-3.5 w-3.5 text-primary" />
+                        Open-Source PRs
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        Contributors possess complete authorization to clone for active repository additions, feature merges, bug resolutions, and security PRs.
+                      </p>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <kbd className="bg-background border border-border px-1.5 py-0.5 rounded shadow-sm font-semibold text-[10px]">Esc</kbd>
+
+                    <div className="border border-border/80 rounded-lg p-4 bg-background/40 space-y-1.5 shadow-sm">
+                      <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                        <Gift className="h-3.5 w-3.5 text-primary" />
+                        100% Free Ecosystem
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        No platform payments or paywalls. Every tool is provided freely for collaborative developer comparisons.
+                      </p>
                     </div>
-                    <div className="text-muted-foreground">Reset fullscreen focus view and restore sidebars.</div>
+
+                    <div className="border border-border/80 rounded-lg p-4 bg-background/40 space-y-1.5 shadow-sm">
+                      <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                        <Github className="h-3.5 w-3.5 text-primary" />
+                        Sponsorship Invites
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        Sponsorship is welcome and invited from companies and individuals looking to support server hosting and development longevity.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,3 +1,5 @@
+import { AlignLeft, Github, GitPullRequestArrow, HelpCircle, Keyboard, Layers, Settings2, Sliders, Sparkles, Type, Shield, Scale } from "lucide-react";
+
 export const docSections = [
   { id: "getting-started", title: "Getting Started", category: "guide", icon: HelpCircle },
   { id: "workspace-layout", title: "Workspace & Resizers", category: "guide", icon: Layers, badge: "Premium" },
@@ -8,5 +10,7 @@ export const docSections = [
   { id: "gitclear-rich", title: "GitClear Operations", category: "systems", icon: GitPullRequestArrow, badge: "AI Logic" },
   { id: "theme-engine", title: "Universal Theme Engine", category: "systems", icon: Sparkles, badge: "Cohesive" },
   { id: "open-source", title: "Open Source & Env", category: "systems", icon: Github },
-  { id: "keyboard-shortcuts", title: "Keyboard Shortcuts", category: "reference", icon: Keyboard }
+  { id: "keyboard-shortcuts", title: "Keyboard Shortcuts", category: "reference", icon: Keyboard },
+  { id: "privacy-policy", title: "Privacy Policy", category: "legal", icon: Shield },
+  { id: "license", title: "License Agreement", category: "legal", icon: Scale }
 ];
