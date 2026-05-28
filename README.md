@@ -13,23 +13,31 @@ CodeDiff Pro is a production-ready, high-fidelity developer workspace built for 
 
 ## Interface Overview & Screenshots
 
-The application consists of four main premium UI components.
+The application consists of six main premium UI modules.
 
 ### 1. Main Symmetrical Editor Interface
-![Main Symmetrical Editor Interface](./public/screenshots/main_interface.png)
-*Figure 1: Symmetrical visual workspace containing dynamic split and unified editors, custom dropzones, live change count metrics, and the main controls toolbar.*
+![Main Symmetrical Editor Interface](./public/screenshots/workspace_comparison.png)
+*Figure 1: Full comparison panel displaying original and modified editors side-by-side, synchronous scrolling, live change count metrics, and custom visual dropzones.*
 
-### 2. Advanced Customizer & Font Size Panel
-![Advanced Customizer & Font Size Panel](./public/screenshots/editor_styling.png)
-*Figure 2: Editor Sizing container displaying presets (Ultra Compact, Medium Sizing) alongside the custom font size range slider, text input box, and theme-reactive typography.*
+### 2. Workspace Configuration Settings
+![Workspace Configuration Settings](./public/screenshots/workspace_settings.png)
+*Figure 2: Workspace controls panel enabling real-time editing switches, hide unchanged lines, wrap long lines, tab spacing toggles, and customized difference ignore transforms.*
 
-### 3. Integrated Universal Theme Selector
-![Integrated Universal Theme Selector](./public/screenshots/theme_engine.png)
-*Figure 3: Theme colors select dropdown including Studio Dark, Studio Light, High Contrast, One Dark, One Light, and Dracula setups.*
+### 3. Symmetrical Comparison Inspector
+![Symmetrical Comparison Inspector](./public/screenshots/workspace_metrics.png)
+*Figure 3: Live Inspector panel displaying total changed lines, additions, removals, and total output lines alongside custom quick actions for canvas clearing and patch copying.*
 
-### 4. Cohesive Single-Page Documentation Portal
-![Cohesive Single-Page Documentation Portal](./public/screenshots/docs_workspace.png)
-*Figure 4: immersive Documentation workspace loaded dynamically with responsive sidebars, keyboard shortcuts, version releases, and inline legal frameworks.*
+### 4. Advanced Git & Rich Diff Analysis
+![Advanced Git & Rich Diff Analysis](./public/screenshots/git_analysis.png)
+*Figure 4: Advanced Git analysis dashboard including precise moved code block tracking, duplicated paste block discovery, and bulk pattern replacements.*
+
+### 5. High-Contrast Symmetrical Diff Viewer
+![High-Contrast Symmetrical Diff Viewer](./public/screenshots/diff_viewer.png)
+*Figure 5: High-contrast, theme-reactive inline visual diff reader containing hidden unchanged line indicators and unified difference highlights.*
+
+### 6. Integrated Dynamic Documentation Portal
+![Integrated Dynamic Documentation Portal](./public/screenshots/docs_workspace.png)
+*Figure 6: Professional developer documentation panel showing categories, environmental variables setup instructions, static local privacy protocols, and semantic release details.*
 
 ---
 
