@@ -60,7 +60,7 @@ export function MonacoDiffViewer({
           </p>
         </div>
       </div>
-      <div className="editor-shell h-[560px]">
+      <div className="editor-shell notranslate h-[560px]" translate="no">
         <MonacoDiffEditor
           original={original}
           modified={modified}

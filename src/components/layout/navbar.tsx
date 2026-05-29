@@ -10,6 +10,7 @@ import { APP_VERSION } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { cn } from "@/lib/cn";
+import { LanguageSelector } from "./language-selector";
 
 export function Navbar() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -106,6 +107,8 @@ export function Navbar() {
                   License
                 </a>
               </Button>
+
+              <LanguageSelector />
             </>
           )}
 

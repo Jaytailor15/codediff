@@ -44,7 +44,7 @@ export function CodeEditor({
   tabSize = 4
 }: CodeEditorProps) {
   return (
-    <div className="editor-shell h-[380px] overflow-hidden rounded-md border border-border md:h-[520px]">
+    <div className="editor-shell notranslate h-[380px] overflow-hidden rounded-md border border-border md:h-[520px]" translate="no">
       <MonacoEditor
         aria-label={ariaLabel}
         value={value}

@@ -79,6 +79,7 @@ import { env } from "@/lib/env";
 import { DESIGN_TOKENS } from "@/lib/style-config";
 import { cn } from "@/lib/cn";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
+import { LanguageSelector } from "@/components/layout/language-selector";
 
 interface DocSection {
   id: string;
@@ -224,6 +225,7 @@ export default function DocumentationPage() {
                   </a>
                 </Button>
 
+                <LanguageSelector />
                 <Button
                   variant="ghost"
                   size="icon"
