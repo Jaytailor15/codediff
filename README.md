@@ -1,4 +1,4 @@
-# CodeDiff Pro
+# <img src="./public/favicon.svg" width="38" height="38" align="center" style="vertical-align: middle; margin-right: 8px;" /> CodeDiff Pro
 
 [![Open Source](https://img.shields.io/badge/Open%20Source-Cohesive-115e59?style=for-the-badge&logo=github)](https://github.com/jaytailor15/codediff)
 [![License: Restrictive OS](https://img.shields.io/badge/License-Restrictive%20OS-115e59?style=for-the-badge)](file:///Users/pritugvcl/Documents/codediff/README.md#license-agreement)
@@ -13,6 +13,7 @@
 [![Radix UI](https://img.shields.io/badge/Radix_UI-2.2.6-black?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployment-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
 [![Redis Sharing](https://img.shields.io/badge/Redis-Global%20Sharing-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
+[![Google Translate](https://img.shields.io/badge/Google_Translate-Dynamic_Localization-4285F4?style=for-the-badge&logo=googletranslate&logoColor=white)](https://translate.google.com)
 
 CodeDiff Pro is a production-ready, high-fidelity developer workspace built for rapid side-by-side (split) and unified (inline) code comparison. Engineered with complete client-side sandboxing, dynamic Monaco Editor sizing, and theme-reactive aesthetics, CodeDiff Pro ensures your proprietary code is parsed safely, symmetrically, and efficiently entirely inside your browser environment.
 
@@ -158,6 +159,7 @@ CodeDiff Pro is structured strictly using Next.js App Router architectures and s
 | **Radix UI** | ![Radix UI](https://img.shields.io/badge/Radix_UI-black?style=flat-square&logo=radix-ui&logoColor=white) | `2.2.6` / `1.2.6` | Accessible keyboard navigation primitives (Select, Switch, Toast) |
 | **Lucide Icons** | ![Lucide](https://img.shields.io/badge/Lucide-black?style=flat-square&logo=feather&logoColor=white) | `0.511.0` | Consistent, lightweight vector icon assets |
 | **Redis Client** | ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white) | `^4.7.0` | High-performance database client for cross-device shared link lookups |
+| **Google Translate** | ![Google Translate](https://img.shields.io/badge/Google_Translate-4285F4?style=flat-square&logo=googletranslate&logoColor=white) | `Dynamic Engine` | Invisible client-side translation loader supporting 50+ Indian and foreign languages |
 | **Vercel** | ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat-square&logo=vercel&logoColor=white) | `Cloud Hosting` | Secure serverless edge hosting and continuous Git deployment pipelines |
 
 ---
