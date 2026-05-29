@@ -103,19 +103,9 @@ export function createSharePayload(
       // Safety check: ensure applying the patch perfectly reconstructs the modified content
       const testReconstruct = applyPatch(original, patch);
       if (typeof testReconstruct === "string" && testReconstruct === modified) {
-        const patchPayload = JSON.stringify({
-          t: "p", // type: patch
-          o: original,
-          p: patch,
-          l: language
-        });
-        
-        const fullPayload = JSON.stringify({
-          t: "f", // type: full
-          o: original,
-          m: modified,
-          l: language
-        });
+        // Delimiter-based serialization for delta patch (no JSON escaping overhead)
+        const patchPayload = `p\u0001${language}\u0001${original.length}\u0001${original}${patch}`;
+        const fullPayload = `f\u0001${language}\u0001${original.length}\u0001${original}${modified}`;
 
         // Use whichever representation is shorter (patch is usually 50%-90% smaller)
         payloadStr = patchPayload.length < fullPayload.length ? patchPayload : fullPayload;
@@ -125,12 +115,7 @@ export function createSharePayload(
     }
 
     if (!payloadStr) {
-      payloadStr = JSON.stringify({
-        t: "f",
-        o: original,
-        m: modified,
-        l: language
-      });
+      payloadStr = `f\u0001${language}\u0001${original.length}\u0001${original}${modified}`;
     }
 
     const encoder = new TextEncoder();
@@ -275,6 +260,42 @@ export function parseSharePayload(payload: string | null) {
     }
     
     const decodedPayload = new TextDecoder().decode(new Uint8Array(outBytes));
+
+    // Try parsing as delimiter-separated values first (new highly compressed format)
+    if (decodedPayload.includes("\u0001")) {
+      const parts = decodedPayload.split("\u0001");
+      if (parts.length >= 4) {
+        const type = parts[0];
+        const lang = parts[1];
+        const originalLengthStr = parts[2];
+        const originalLength = parseInt(originalLengthStr, 10);
+        
+        if (!isNaN(originalLength)) {
+          const headerLength = type.length + 1 + lang.length + 1 + originalLengthStr.length + 1;
+          const orig = decodedPayload.substring(headerLength, headerLength + originalLength);
+          const modifiedOrPatch = decodedPayload.substring(headerLength + originalLength);
+
+          if (type === "p") {
+            const reconstructed = applyPatch(orig, modifiedOrPatch);
+            if (typeof reconstructed === "string") {
+              return {
+                original: orig,
+                modified: reconstructed,
+                language: lang
+              };
+            }
+          } else if (type === "f") {
+            return {
+              original: orig,
+              modified: modifiedOrPatch,
+              language: lang
+            };
+          }
+        }
+      }
+    }
+
+    // Fallback: Parse as JSON representation (new and legacy fallback formats)
     const parsed = JSON.parse(decodedPayload);
     return normalizeParsedPayload(parsed);
   } catch (error) {
@@ -287,6 +308,40 @@ export function parseSharePayload(payload: string | null) {
         base64 += "=";
       }
       const raw = decodeURIComponent(escape(window.atob(base64)));
+
+      if (raw.includes("\u0001")) {
+        const parts = raw.split("\u0001");
+        if (parts.length >= 4) {
+          const type = parts[0];
+          const lang = parts[1];
+          const originalLengthStr = parts[2];
+          const originalLength = parseInt(originalLengthStr, 10);
+          
+          if (!isNaN(originalLength)) {
+            const headerLength = type.length + 1 + lang.length + 1 + originalLengthStr.length + 1;
+            const orig = raw.substring(headerLength, headerLength + originalLength);
+            const modifiedOrPatch = raw.substring(headerLength + originalLength);
+
+            if (type === "p") {
+              const reconstructed = applyPatch(orig, modifiedOrPatch);
+              if (typeof reconstructed === "string") {
+                return {
+                  original: orig,
+                  modified: reconstructed,
+                  language: lang
+                };
+              }
+            } else if (type === "f") {
+              return {
+                original: orig,
+                modified: modifiedOrPatch,
+                language: lang
+              };
+            }
+          }
+        }
+      }
+
       const parsed = JSON.parse(raw);
       return normalizeParsedPayload(parsed);
     } catch {
