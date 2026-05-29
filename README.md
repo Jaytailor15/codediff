@@ -11,6 +11,8 @@
 [![Zustand](https://img.shields.io/badge/Zustand-5.0.5-orange?style=for-the-badge)](https://zustand-demo.pmnd.rs)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.16.0-black?style=for-the-badge&logo=framer&logoColor=FF007F)](https://www.framer.com/motion/)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-2.2.6-black?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployment-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![Redis Sharing](https://img.shields.io/badge/Redis-Global%20Sharing-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
 
 CodeDiff Pro is a production-ready, high-fidelity developer workspace built for rapid side-by-side (split) and unified (inline) code comparison. Engineered with complete client-side sandboxing, dynamic Monaco Editor sizing, and theme-reactive aesthetics, CodeDiff Pro ensures your proprietary code is parsed safely, symmetrically, and efficiently entirely inside your browser environment.
 
@@ -87,7 +89,7 @@ npm install
 *Note: This command resolves all dependencies including Zustand, Framer Motion, Radix UI primitives, and Monaco Editor packages.*
 
 ### Step 4: Configure Local Environment Variables
-Branding and repository paths are controlled via standard environment variables.
+Branding, repository paths, and global sharing credentials are controlled via standard environment variables.
 1. Duplicate the `.env.example` file:
    ```bash
    cp .env.example .env
@@ -97,10 +99,13 @@ Branding and repository paths are controlled via standard environment variables.
    NEXT_PUBLIC_APP_NAME="CodeDiff Pro"
    NEXT_PUBLIC_APP_VERSION="1.4.3"
    NEXT_PUBLIC_REPO_URL="https://github.com/jaytailor15/codediff"
+   REDIS_URL="redis://default:k87Fz3tHxwPesB1f1VVGmiykUz5ff9u4@yarn-salt-day-86323.db.redis.io:12001"
    ```
+3. Parameters:
    - `NEXT_PUBLIC_APP_NAME`: Controls all page HTML titles, branding labels, and workspace headings.
    - `NEXT_PUBLIC_APP_VERSION`: Sets the dynamic version tags inside the headers, sidebar configurations, and release notes.
    - `NEXT_PUBLIC_REPO_URL`: Directs the "GitHub Repository" and "Open Source" buttons in the navigation bar to your repository space.
+   - `REDIS_URL`: The connection string for your global Redis database, used to store comparison payloads and generate secure, shortened 16-character sharing links across different PCs.
 
 ### Step 5: Launch the Development Server
 Execute the Next.js local development script. The server will start and hot-reload changes on save:
@@ -152,6 +157,8 @@ CodeDiff Pro is structured strictly using Next.js App Router architectures and s
 | **Framer Motion** | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=flat-square&logo=framer&logoColor=white) | `12.16.0` | Restrained UI micro-animations and panel transitions |
 | **Radix UI** | ![Radix UI](https://img.shields.io/badge/Radix_UI-black?style=flat-square&logo=radix-ui&logoColor=white) | `2.2.6` / `1.2.6` | Accessible keyboard navigation primitives (Select, Switch, Toast) |
 | **Lucide Icons** | ![Lucide](https://img.shields.io/badge/Lucide-black?style=flat-square&logo=feather&logoColor=white) | `0.511.0` | Consistent, lightweight vector icon assets |
+| **Redis Client** | ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white) | `^4.7.0` | High-performance database client for cross-device shared link lookups |
+| **Vercel** | ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat-square&logo=vercel&logoColor=white) | `Cloud Hosting` | Secure serverless edge hosting and continuous Git deployment pipelines |
 
 ---
 
@@ -159,9 +166,16 @@ CodeDiff Pro is structured strictly using Next.js App Router architectures and s
 
 ### Client-Side Execution Sandbox
 All file uploads, text inputs, ignorable difference transformations, and patch processing occur entirely inside your browser's execution sandbox.
-- **Zero Raw Data Transfers**: No source code snippets, character metrics, or comparison logs are transmitted to external databases, tracking systems, or cloud nodes.
+- **Zero Raw Data Transfers**: No source code snippets, character metrics, or comparison logs are transmitted to external databases, tracking systems, or cloud nodes unless you explicitly choose to create a shortened sharing link.
 - **Client-Side Storage**: Preserves custom layout states (like font sizing, word-wrap toggles, and recent comparison cards) using standard local Web Storage APIs (Local Storage).
 - **Cookie-Free Experience**: The system does not write tracking cookies or integrate analytical scripts.
+
+### Secure Database Sharing Protocol
+When you click **Share**, CodeDiff Pro allows you to optionally save your comparison workspace to a secure cloud database to generate an ultra-short 16-character link:
+- **16-Character Cryptographic Slugs**: Comparison payloads are stored in the global Redis database and indexed under cryptographically random, 16-character slugs (`crypto.randomBytes`) to prevent key guessing or enumeration.
+- **UTF-8 LZW Compression**: Workspace contents are compressed using a robust, custom LZW byte encoder before transmission to minimize database storage footprints and maximize transmission speeds.
+- **30-Day Auto-Expiration (TTL)**: To respect resources and protect data lifecycles, all shared database records are configured with an automatic 30-day expiration (`EX: 2592000` seconds).
+- **Offline Fallback**: If the cloud database is ever offline, the share action gracefully degrades to generating a direct LZW client-compressed query link, ensuring link sharing is always fully functional.
 
 ---
 

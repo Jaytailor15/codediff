@@ -1,54 +1,42 @@
 import fs from "fs";
 import path from "path";
+import { createClient } from "redis";
 
 const STORE_FILE = path.join(process.cwd(), ".next", "kv-store.json");
 
-// Direct fetch calls to Vercel KV REST API to maintain a completely dependency-free architecture
-async function upstashCall(
-  command: "get" | "set",
-  key: string,
-  value?: string
-): Promise<string | null> {
-  const url = process.env.KV_REST_API_URL;
-  const token = process.env.KV_REST_API_TOKEN;
+let redisClient: ReturnType<typeof createClient> | null = null;
 
-  if (!url || !token) {
+async function getRedisClient() {
+  const url = process.env.REDIS_URL;
+  if (!url) {
     return null;
   }
 
+  if (redisClient?.isOpen) {
+    return redisClient;
+  }
+
   try {
-    if (command === "set") {
-      const response = await fetch(`${url}/set/${key}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: value,
-      });
-      if (!response.ok) {
-        throw new Error(`Vercel KV set failed: ${response.statusText}`);
-      }
-      return "OK";
-    } else {
-      const response = await fetch(`${url}/get/${key}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`Vercel KV get failed: ${response.statusText}`);
-      }
-      const data = await response.json();
-      return data.result || null;
-    }
+    redisClient = createClient({
+      url,
+      socket: {
+        reconnectStrategy: (retries: number) => Math.min(retries * 50, 1000),
+      },
+    });
+
+    redisClient.on("error", (err: Error) => {
+      console.error("Redis connection error:", err);
+    });
+
+    await redisClient.connect();
+    return redisClient;
   } catch (error) {
-    console.error("Vercel KV API error:", error);
+    console.error("Redis initialization failed:", error);
     return null;
   }
 }
 
-// Local file system fallback for development on localhost
+// Local file system fallback for development when REDIS_URL is not set
 function localStoreGet(key: string): string | null {
   try {
     if (!fs.existsSync(STORE_FILE)) {
@@ -86,18 +74,27 @@ function localStoreSet(key: string, value: string): void {
 }
 
 export async function getKV(key: string): Promise<string | null> {
-  const isProd = !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
-  if (isProd) {
-    return await upstashCall("get", key);
+  const client = await getRedisClient();
+  if (client) {
+    try {
+      return await client.get(key);
+    } catch (err) {
+      console.error("Redis get failed, falling back to local storage:", err);
+    }
   }
   return localStoreGet(key);
 }
 
 export async function setKV(key: string, value: string): Promise<void> {
-  const isProd = !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
-  if (isProd) {
-    await upstashCall("set", key, value);
-    return;
+  const client = await getRedisClient();
+  if (client) {
+    try {
+      // Store the payload securely with a generous 30-day automatic expiration (2592000 seconds)
+      await client.set(key, value, { EX: 2592000 });
+      return;
+    } catch (err) {
+      console.error("Redis set failed, falling back to local storage:", err);
+    }
   }
   localStoreSet(key, value);
 }

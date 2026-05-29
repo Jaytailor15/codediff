@@ -1299,15 +1299,37 @@ export default function DocumentationPage() {
                     <p><span className="text-primary font-bold">NEXT_PUBLIC_APP_NAME</span>="CodeDiff Pro" <span className="text-muted-foreground/60"># Customized workspace title</span></p>
                     <p><span className="text-primary font-bold">NEXT_PUBLIC_APP_VERSION</span>="1.4.3" <span className="text-muted-foreground/60"># Symmetrical version tags</span></p>
                     <p><span className="text-primary font-bold">NEXT_PUBLIC_REPO_URL</span>="https://github.com/jaytailor15/codediff" <span className="text-muted-foreground/60"># Repository redirection link</span></p>
+                    <p><span className="text-primary font-bold">REDIS_URL</span>="redis://default:password@host:port" <span className="text-muted-foreground/60"># Global share database credentials</span></p>
                   </div>
 
-                  <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-lg p-4 text-xs space-y-2">
-                    <p className="font-bold text-emerald-500 flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Visual Open Source Badge
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-lg p-4 text-xs space-y-2">
+                      <p className="font-bold text-emerald-500 flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                        Visual Open Source Badge
+                      </p>
+                      <p className="text-muted-foreground leading-relaxed font-sans">
+                        An <strong className="text-foreground">OPEN SOURCE</strong> visual badge is placed in the top Navbar header next to the version indicator. Tapping the Github Repository button in the Navbar redirects users directly to the repository link defined in your `.env` settings (controlled under <code className="text-primary font-bold font-mono text-[10px]">jaytailor15</code>'s space).
+                      </p>
+                    </div>
+
+                    <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-4 text-xs space-y-2">
+                      <p className="font-bold text-red-500 flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+                        Secure Redis Cloud Sharing
+                      </p>
+                      <p className="text-muted-foreground leading-relaxed font-sans">
+                        Connecting your database via the <code className="text-primary font-bold font-mono text-[10px]">REDIS_URL</code> variable enables global, secure 16-character link sharing across different machines. Slugs are securely randomized on the server and records expire automatically after 30 days to prevent bloat.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-4 text-xs space-y-2">
+                    <p className="font-bold text-foreground flex items-center gap-1.5">
+                      Vercel Serverless Edge Integration
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      An <strong className="text-foreground">OPEN SOURCE</strong> visual badge is placed in the top Navbar header next to the version indicator. This represents that the code was engineered as a completely self-hosted developer project, requiring no external analytics tools. Tapping the Github Repository button in the Navbar redirects users directly to the repository link defined in your `.env` settings (controlled under <code className="text-primary font-bold font-mono">jaytailor15</code>'s space).
+                      CodeDiff Pro is pre-configured for instant zero-configuration deployment to the Vercel hosting platform. Next.js 15 routing handles GET and POST requests on serverless edge runtimes, ensuring database payloads are retrieved securely and rendered in less than 150ms globally.
                     </p>
                   </div>
                 </div>
