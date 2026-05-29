@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "CodeDiff Pro",
+  "version": "1.4.3",
+  "description": "Compare code and file differences side-by-side in a locked sidebar directly alongside GitHub Pull Requests, StackOverflow, or documentation panels.",
+  "permissions": [
+    "sidePanel"
+  ],
+  "action": {
+    "default_icon": "favicon.svg"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "favicon.svg",
+    "32": "favicon.svg",
+    "48": "favicon.svg",
+    "128": "favicon.svg"
+  }
+}
