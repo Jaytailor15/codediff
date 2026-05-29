@@ -230,9 +230,51 @@ export function DiffWorkspace() {
     if (!isOriginalLoaded || !isModifiedLoaded || hasHydratedWorkspace.current)
       return;
 
-    const shared = parseSharePayload(
-      new URLSearchParams(window.location.search).get("share")
-    );
+    const shareParam = new URLSearchParams(window.location.search).get("share");
+    if (!shareParam) {
+      setOriginal(storedOriginal);
+      setModified(storedModified);
+      hasHydratedWorkspace.current = true;
+      return;
+    }
+
+    // 16-character database sharing link
+    if (shareParam.length === 16) {
+      fetch(`/api/share?id=${shareParam}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to load");
+          return res.json() as Promise<{ payload: string }>;
+        })
+        .then((data) => {
+          const shared = parseSharePayload(data.payload);
+          if (shared) {
+            setOriginal({
+              content: shared.original,
+              fileName: "shared-original",
+              language: shared.language
+            });
+            setModified({
+              content: shared.modified,
+              fileName: "shared-modified",
+              language: shared.language
+            });
+          } else {
+            setOriginal(storedOriginal);
+            setModified(storedModified);
+          }
+          hasHydratedWorkspace.current = true;
+        })
+        .catch((err) => {
+          console.error("Failed to load shared database comparison:", err);
+          setOriginal(storedOriginal);
+          setModified(storedModified);
+          hasHydratedWorkspace.current = true;
+        });
+      return;
+    }
+
+    // Legacy or fallback direct delta-compressed LZW share link
+    const shared = parseSharePayload(shareParam);
     if (shared) {
       setOriginal({
         content: shared.original,
@@ -244,12 +286,10 @@ export function DiffWorkspace() {
         fileName: "shared-modified",
         language: shared.language
       });
-      hasHydratedWorkspace.current = true;
-      return;
+    } else {
+      setOriginal(storedOriginal);
+      setModified(storedModified);
     }
-
-    setOriginal(storedOriginal);
-    setModified(storedModified);
     hasHydratedWorkspace.current = true;
   }, [isModifiedLoaded, isOriginalLoaded, storedModified, storedOriginal]);
 
@@ -429,22 +469,49 @@ export function DiffWorkspace() {
       modified.content,
       original.language
     );
-    const url = `${window.location.origin}${window.location.pathname}?share=${encodeURIComponent(payload)}`;
 
-    // Update the browser history so reloading retains the comparison
-    window.history.replaceState(null, "", url);
+    // Dynamic fallback URL in case database is down or offline
+    const fallbackUrl = `${window.location.origin}${window.location.pathname}?share=${encodeURIComponent(payload)}`;
 
     try {
-      await navigator.clipboard.writeText(url);
-      toast({
-        title: "Share URL Copied",
-        description: "A secure, compact delta-compressed link has been copied to your clipboard."
+      const response = await fetch("/api/share", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ payload }),
       });
-    } catch {
+
+      if (!response.ok) {
+        throw new Error("API sharing failed");
+      }
+
+      const { id } = (await response.json()) as { id: string };
+      const shortUrl = `${window.location.origin}${window.location.pathname}?share=${id}`;
+
+      // Update browser history with the secure 16-character database share link
+      window.history.replaceState(null, "", shortUrl);
+      await navigator.clipboard.writeText(shortUrl);
+
       toast({
-        title: "Share URL Created",
-        description: "Clipboard access was blocked, but the page URL has been updated."
+        title: "Shortened Link Copied",
+        description: "A secure, 16-character sharing link has been copied to your clipboard."
       });
+    } catch (error) {
+      console.warn("Failed to generate database share link, falling back to local compression:", error);
+      window.history.replaceState(null, "", fallbackUrl);
+      try {
+        await navigator.clipboard.writeText(fallbackUrl);
+        toast({
+          title: "Share URL Copied",
+          description: "Copied comparison link to clipboard."
+        });
+      } catch {
+        toast({
+          title: "Share URL Created",
+          description: "Clipboard blocked, but the page URL has been updated."
+        });
+      }
     }
   }, [modified.content, original.content, original.language, toast]);
 
