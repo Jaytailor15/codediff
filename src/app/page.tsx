@@ -4,7 +4,7 @@ import { Navbar } from "@/components/layout/navbar";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.14),transparent_32rem),linear-gradient(180deg,hsl(var(--background)),hsl(var(--background)))]">
+    <main className="min-h-screen pt-16 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.14),transparent_32rem),linear-gradient(180deg,hsl(var(--background)),hsl(var(--background)))]">
       <Navbar />
       <DiffWorkspace />
       <Footer />

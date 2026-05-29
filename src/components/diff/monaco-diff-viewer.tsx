@@ -87,7 +87,7 @@ export function MonacoDiffViewer({
             renderLineHighlight: renderLineHighlight ? "all" : "none",
             renderWhitespace: renderWhitespace,
             tabSize: tabSize
-          }}
+          } as any}
         />
       </div>
     </section>

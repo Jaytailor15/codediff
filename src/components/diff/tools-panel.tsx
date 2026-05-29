@@ -216,7 +216,7 @@ export function ToolsPanel({
               <div className="space-y-4 pt-0.5 pb-1 px-1">
                 {/* Advanced Font Sizing Controls */}
                 <OptionGroup label="Font Size">
-                  <div className="flex flex-col gap-2.5">
+                  <div className="flex flex-col gap-2.5 min-w-0 w-full">
                     <select
                       value={[12, 13, 14, 16].includes(editorFontSize) ? String(editorFontSize) : "custom"}
                       onChange={(e) => {
@@ -234,16 +234,16 @@ export function ToolsPanel({
                     </select>
                     
                     {/* Clamped range slider and input [10px, 24px] */}
-                    <div className="flex items-center gap-3 bg-secondary/30 p-2 rounded border border-border/40">
+                    <div className="flex items-center gap-2 bg-secondary/30 p-1.5 rounded border border-border/40 min-w-0 w-full">
                       <input
                         type="range"
                         min={10}
                         max={24}
                         value={editorFontSize}
                         onChange={(e) => onEditorFontSizeChange(Number(e.target.value))}
-                        className="flex-1 h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none"
+                        className="flex-1 w-full min-w-0 h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none"
                       />
-                      <div className="flex items-center gap-1 shrink-0">
+                      <div className="flex items-center gap-1 shrink-0 min-w-0">
                         <input
                           type="number"
                           min={10}
@@ -253,9 +253,9 @@ export function ToolsPanel({
                             const val = Math.max(10, Math.min(24, Number(e.target.value)));
                             onEditorFontSizeChange(val);
                           }}
-                          className="w-10 h-7 rounded border border-border bg-background px-1 text-center text-xs font-bold focus:outline-none focus:ring-1 focus:ring-primary/50 text-foreground"
+                          className="w-[42px] h-7 rounded border border-border bg-background px-1 text-center text-xs font-bold focus:outline-none focus:ring-1 focus:ring-primary/50 text-foreground min-w-0"
                         />
-                        <span className="text-[10px] text-muted-foreground font-bold">px</span>
+                        <span className="text-[10px] text-muted-foreground font-bold select-none">px</span>
                       </div>
                     </div>
                   </div>
@@ -421,7 +421,7 @@ function OptionGroup({
   children: ReactNode;
 }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 min-w-0 w-full">
       <p className={DESIGN_TOKENS.typography.headerMuted}>
         {label}
       </p>

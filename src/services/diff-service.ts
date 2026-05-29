@@ -1,4 +1,4 @@
-import { createTwoFilesPatch, diffLines } from "diff";
+import { createTwoFilesPatch, diffLines, applyPatch } from "diff";
 import type { DiffOptions, DiffStats } from "@/types/diff";
 
 export function calculateDiffStats(
@@ -90,25 +90,281 @@ export function createSharePayload(
   original: string,
   modified: string,
   language: string
-) {
-  const payload = JSON.stringify({ original, modified, language });
-  return typeof window === "undefined"
-    ? ""
-    : window.btoa(unescape(encodeURIComponent(payload)));
+): string {
+  if (typeof window === "undefined") return "";
+
+  try {
+    // Stringify the full document data to be 100% robust against Monaco line-ending normalizations
+    const payloadStr = JSON.stringify({
+      original,
+      modified,
+      language
+    });
+
+    const encoder = new TextEncoder();
+    const bytes = encoder.encode(payloadStr);
+
+    // Synchronous LZW compression over UTF-8 bytes to support all Unicode/Emojis perfectly
+    const dictionary: Map<string, number> = new Map();
+    for (let i = 0; i < 256; i++) {
+      dictionary.set(String.fromCharCode(i), i);
+    }
+
+    let word = "";
+    const codes: number[] = [];
+    let dictSize = 256;
+
+    for (let i = 0; i < bytes.length; i++) {
+      const char = String.fromCharCode(bytes[i]);
+      const joined = word + char;
+      if (dictionary.has(joined)) {
+        word = joined;
+      } else {
+        codes.push(dictionary.get(word)!);
+        dictionary.set(joined, dictSize++);
+        word = char;
+      }
+    }
+    if (word !== "") {
+      codes.push(dictionary.get(word)!);
+    }
+
+    // Convert codes to a Varint byte stream to remove 16-bit code doubling null-byte overhead
+    const byteList: number[] = [];
+    for (let i = 0; i < codes.length; i++) {
+      let v = codes[i];
+      while (v >= 0x80) {
+        byteList.push((v & 0x7f) | 0x80);
+        v >>>= 7;
+      }
+      byteList.push(v & 0x7f);
+    }
+
+    const buffer = new Uint8Array(byteList);
+
+    // Convert Uint8Array buffer to Base64 in batches
+    let binary = "";
+    const len = buffer.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(buffer[i]);
+    }
+
+    // Output dynamic URL-Safe Base64 (RFC 4648) with padding stripped
+    return window.btoa(binary)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+  } catch (error) {
+    console.error("Compression failed, falling back to legacy base64", error);
+    try {
+      const fallback = JSON.stringify({ original, modified, language });
+      return window.btoa(unescape(encodeURIComponent(fallback)))
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+    } catch {
+      return "";
+    }
+  }
 }
 
 export function parseSharePayload(payload: string | null) {
   if (!payload || typeof window === "undefined") return null;
 
   try {
-    return JSON.parse(decodeURIComponent(escape(window.atob(payload)))) as {
-      original: string;
-      modified: string;
-      language: string;
-    };
-  } catch {
-    return null;
+    // Restore standard Base64 from URL-safe Base64 representation
+    let base64 = payload
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
+    
+    while (base64.length % 4) {
+      base64 += "=";
+    }
+    
+    const binary = window.atob(base64);
+    
+    const buffer = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      buffer[i] = binary.charCodeAt(i);
+    }
+
+    // Decode Varint byte stream back to LZW codes
+    const codes: number[] = [];
+    let idx = 0;
+    while (idx < buffer.length) {
+      let value = 0;
+      let shift = 0;
+      while (idx < buffer.length) {
+        const byte = buffer[idx++];
+        value |= (byte & 0x7f) << shift;
+        if (!(byte & 0x80)) {
+          break;
+        }
+        shift += 7;
+      }
+      codes.push(value);
+    }
+
+    if (codes.length === 0) return null;
+    
+    // LZW decompression dictionaries
+    const dictionary: Map<number, Uint8Array> = new Map();
+    for (let i = 0; i < 256; i++) {
+      dictionary.set(i, new Uint8Array([i]));
+    }
+    
+    let dictSize = 256;
+    let currCode = codes[0];
+    
+    if (!dictionary.has(currCode)) {
+      // Fallback: try parsing directly as legacy uncompressed JSON
+      const parsed = JSON.parse(decodeURIComponent(escape(binary)));
+      return normalizeParsedPayload(parsed);
+    }
+    
+    let val = dictionary.get(currCode)!;
+    const outBytes: number[] = Array.from(val);
+    let oldVal = val;
+    
+    for (let i = 1; i < codes.length; i++) {
+      const nextCode = codes[i];
+      let s: Uint8Array;
+      if (dictionary.has(nextCode)) {
+        s = dictionary.get(nextCode)!;
+      } else if (nextCode === dictSize) {
+        s = new Uint8Array([...oldVal, oldVal[0]]);
+      } else {
+        throw new Error("Invalid LZW sequence");
+      }
+      
+      outBytes.push(...s);
+      dictionary.set(dictSize++, new Uint8Array([...oldVal, s[0]]));
+      oldVal = s;
+    }
+    
+    const decodedPayload = new TextDecoder().decode(new Uint8Array(outBytes));
+
+    // Try parsing as delimiter-separated values first (for backward compatibility with transition URLs)
+    if (decodedPayload.includes("\u0001")) {
+      const parts = decodedPayload.split("\u0001");
+      if (parts.length >= 4) {
+        const type = parts[0];
+        const lang = parts[1];
+        const originalLengthStr = parts[2];
+        const originalLength = parseInt(originalLengthStr, 10);
+        
+        if (!isNaN(originalLength)) {
+          const headerLength = type.length + 1 + lang.length + 1 + originalLengthStr.length + 1;
+          const orig = decodedPayload.substring(headerLength, headerLength + originalLength);
+          const modifiedOrPatch = decodedPayload.substring(headerLength + originalLength);
+
+          if (type === "p") {
+            const reconstructed = applyPatch(orig, modifiedOrPatch);
+            if (typeof reconstructed === "string") {
+              return {
+                original: orig,
+                modified: reconstructed,
+                language: lang
+              };
+            }
+          } else if (type === "f") {
+            return {
+              original: orig,
+              modified: modifiedOrPatch,
+              language: lang
+            };
+          }
+        }
+      }
+    }
+
+    // Standard JSON representation
+    const parsed = JSON.parse(decodedPayload);
+    return normalizeParsedPayload(parsed);
+  } catch (error) {
+    // Fallback: parse as legacy uncompressed JSON Base64 string
+    try {
+      let base64 = payload
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+      while (base64.length % 4) {
+        base64 += "=";
+      }
+      const raw = decodeURIComponent(escape(window.atob(base64)));
+
+      if (raw.includes("\u0001")) {
+        const parts = raw.split("\u0001");
+        if (parts.length >= 4) {
+          const type = parts[0];
+          const lang = parts[1];
+          const originalLengthStr = parts[2];
+          const originalLength = parseInt(originalLengthStr, 10);
+          
+          if (!isNaN(originalLength)) {
+            const headerLength = type.length + 1 + lang.length + 1 + originalLengthStr.length + 1;
+            const orig = raw.substring(headerLength, headerLength + originalLength);
+            const modifiedOrPatch = raw.substring(headerLength + originalLength);
+
+            if (type === "p") {
+              const reconstructed = applyPatch(orig, modifiedOrPatch);
+              if (typeof reconstructed === "string") {
+                return {
+                  original: orig,
+                  modified: reconstructed,
+                  language: lang
+                };
+              }
+            } else if (type === "f") {
+              return {
+                original: orig,
+                modified: modifiedOrPatch,
+                language: lang
+              };
+            }
+          }
+        }
+      }
+
+      const parsed = JSON.parse(raw);
+      return normalizeParsedPayload(parsed);
+    } catch {
+      return null;
+    }
   }
+}
+
+// Helper to normalize the parsed payload from either the new format (patch or full) or legacy formats
+function normalizeParsedPayload(parsed: any) {
+  if (!parsed || typeof parsed !== "object") return null;
+
+  // Delimiter single-character keys support
+  if (parsed.t === "p") {
+    const reconstructed = applyPatch(parsed.o, parsed.p);
+    if (typeof reconstructed === "string") {
+      return {
+        original: parsed.o,
+        modified: reconstructed,
+        language: parsed.l
+      };
+    }
+  } else if (parsed.t === "f") {
+    return {
+      original: parsed.o,
+      modified: parsed.m,
+      language: parsed.l
+    };
+  }
+
+  // Robust default JSON object support
+  if ("original" in parsed && "modified" in parsed) {
+    return {
+      original: parsed.original as string,
+      modified: parsed.modified as string,
+      language: (parsed.language as string) || "plaintext"
+    };
+  }
+
+  return null;
 }
 
 function countMeaningfulLines(value: string) {
