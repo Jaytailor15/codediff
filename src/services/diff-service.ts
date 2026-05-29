@@ -94,29 +94,12 @@ export function createSharePayload(
   if (typeof window === "undefined") return "";
 
   try {
-    let payloadStr = "";
-
-    // Try delta patch encoding to dramatically reduce size for typical edits
-    try {
-      const patch = createTwoFilesPatch("original", "modified", original, modified, "", "", { context: 3 });
-      
-      // Safety check: ensure applying the patch perfectly reconstructs the modified content
-      const testReconstruct = applyPatch(original, patch);
-      if (typeof testReconstruct === "string" && testReconstruct === modified) {
-        // Delimiter-based serialization for delta patch (no JSON escaping overhead)
-        const patchPayload = `p\u0001${language}\u0001${original.length}\u0001${original}${patch}`;
-        const fullPayload = `f\u0001${language}\u0001${original.length}\u0001${original}${modified}`;
-
-        // Use whichever representation is shorter (patch is usually 50%-90% smaller)
-        payloadStr = patchPayload.length < fullPayload.length ? patchPayload : fullPayload;
-      }
-    } catch {
-      // Fallback to full encoding if patching fails
-    }
-
-    if (!payloadStr) {
-      payloadStr = `f\u0001${language}\u0001${original.length}\u0001${original}${modified}`;
-    }
+    // Stringify the full document data to be 100% robust against Monaco line-ending normalizations
+    const payloadStr = JSON.stringify({
+      original,
+      modified,
+      language
+    });
 
     const encoder = new TextEncoder();
     const bytes = encoder.encode(payloadStr);
@@ -261,7 +244,7 @@ export function parseSharePayload(payload: string | null) {
     
     const decodedPayload = new TextDecoder().decode(new Uint8Array(outBytes));
 
-    // Try parsing as delimiter-separated values first (new highly compressed format)
+    // Try parsing as delimiter-separated values first (for backward compatibility with transition URLs)
     if (decodedPayload.includes("\u0001")) {
       const parts = decodedPayload.split("\u0001");
       if (parts.length >= 4) {
@@ -295,7 +278,7 @@ export function parseSharePayload(payload: string | null) {
       }
     }
 
-    // Fallback: Parse as JSON representation (new and legacy fallback formats)
+    // Standard JSON representation
     const parsed = JSON.parse(decodedPayload);
     return normalizeParsedPayload(parsed);
   } catch (error) {
@@ -354,9 +337,8 @@ export function parseSharePayload(payload: string | null) {
 function normalizeParsedPayload(parsed: any) {
   if (!parsed || typeof parsed !== "object") return null;
 
-  // New compressed format with single character keys
+  // Delimiter single-character keys support
   if (parsed.t === "p") {
-    // Patch type: reconstruct modified content
     const reconstructed = applyPatch(parsed.o, parsed.p);
     if (typeof reconstructed === "string") {
       return {
@@ -366,7 +348,6 @@ function normalizeParsedPayload(parsed: any) {
       };
     }
   } else if (parsed.t === "f") {
-    // Full type
     return {
       original: parsed.o,
       modified: parsed.m,
@@ -374,7 +355,7 @@ function normalizeParsedPayload(parsed: any) {
     };
   }
 
-  // Legacy format check (original, modified, language)
+  // Robust default JSON object support
   if ("original" in parsed && "modified" in parsed) {
     return {
       original: parsed.original as string,
