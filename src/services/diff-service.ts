@@ -161,12 +161,18 @@ export function createSharePayload(
       codes.push(dictionary.get(word)!);
     }
 
-    // Convert 16-bit code values into a binary byte array (2 bytes per code) for dense layout
-    const buffer = new Uint8Array(codes.length * 2);
+    // Convert codes to a Varint byte stream to remove 16-bit code doubling null-byte overhead
+    const byteList: number[] = [];
     for (let i = 0; i < codes.length; i++) {
-      buffer[i * 2] = codes[i] & 0xff;          // Low byte
-      buffer[i * 2 + 1] = (codes[i] >> 8) & 0xff; // High byte
+      let v = codes[i];
+      while (v >= 0x80) {
+        byteList.push((v & 0x7f) | 0x80);
+        v >>>= 7;
+      }
+      byteList.push(v & 0x7f);
     }
+
+    const buffer = new Uint8Array(byteList);
 
     // Convert Uint8Array buffer to Base64 in batches
     let binary = "";
@@ -209,11 +215,29 @@ export function parseSharePayload(payload: string | null) {
     
     const binary = window.atob(base64);
     
-    // Attempt decoding as LZW-compressed 16-bit codes
-    const codes = new Uint16Array(binary.length / 2);
-    for (let i = 0; i < codes.length; i++) {
-      codes[i] = binary.charCodeAt(i * 2) | (binary.charCodeAt(i * 2 + 1) << 8);
+    const buffer = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      buffer[i] = binary.charCodeAt(i);
     }
+
+    // Decode Varint byte stream back to LZW codes
+    const codes: number[] = [];
+    let idx = 0;
+    while (idx < buffer.length) {
+      let value = 0;
+      let shift = 0;
+      while (idx < buffer.length) {
+        const byte = buffer[idx++];
+        value |= (byte & 0x7f) << shift;
+        if (!(byte & 0x80)) {
+          break;
+        }
+        shift += 7;
+      }
+      codes.push(value);
+    }
+
+    if (codes.length === 0) return null;
     
     // LZW decompression dictionaries
     const dictionary: Map<number, Uint8Array> = new Map();
