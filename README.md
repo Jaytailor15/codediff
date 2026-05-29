@@ -1,36 +1,78 @@
-# <img src="./public/favicon.svg" width="38" height="38" align="center" style="vertical-align: middle; margin-right: 8px;" /> CodeDiff Pro
+<p align="center">
+  <a href="https://codediffs.vercel.app/" target="_blank" rel="noopener noreferrer">
+    <img src="./public/favicon.svg" width="180" height="180" alt="CodeDiff Pro Symmetrical Logo" style="border-radius: 24px; filter: drop-shadow(0 10px 15px rgba(16, 185, 129, 0.25));" />
+  </a>
+</p>
 
-[![Open Source](https://img.shields.io/badge/Open%20Source-Cohesive-115e59?style=for-the-badge&logo=github)](https://github.com/jaytailor15/codediff)
-[![License: Restrictive OS](https://img.shields.io/badge/License-Restrictive%20OS-115e59?style=for-the-badge)](file:///Users/pritugvcl/Documents/codediff/README.md#license-agreement)
-[![Privacy Policy: Local Sandbox](https://img.shields.io/badge/Privacy-100%25%20Local%20Sandbox-115e59?style=for-the-badge)](file:///Users/pritugvcl/Documents/codediff/README.md#privacy-policy)
-[![Next.js](https://img.shields.io/badge/Next.js-15.3.3-black?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Monaco Editor](https://img.shields.io/badge/Monaco_Editor-4.7.0-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)](https://github.com/suren-atoyan/monaco-react)
-[![Zustand](https://img.shields.io/badge/Zustand-5.0.5-orange?style=for-the-badge)](https://zustand-demo.pmnd.rs)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.16.0-black?style=for-the-badge&logo=framer&logoColor=FF007F)](https://www.framer.com/motion/)
-[![Radix UI](https://img.shields.io/badge/Radix_UI-2.2.6-black?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployment-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
-[![Redis Sharing](https://img.shields.io/badge/Redis-Global%20Sharing-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
-[![Google Translate](https://img.shields.io/badge/Google_Translate-Dynamic_Localization-4285F4?style=for-the-badge&logo=googletranslate&logoColor=white)](https://translate.google.com)
+<h1 align="center">CodeDiff Pro</h1>
 
-CodeDiff Pro is a production-ready, high-fidelity developer workspace built for rapid side-by-side (split) and unified (inline) code comparison. Engineered with complete client-side sandboxing, dynamic Monaco Editor sizing, and theme-reactive aesthetics, CodeDiff Pro ensures your proprietary code is parsed safely, symmetrically, and efficiently entirely inside your browser environment.
+<p align="center">
+  <strong>The Ultimate Symmetrical Online Code Difference Checker and Developer Workspace. Engineered for High-Fidelity Side-by-Side (Split) and Unified (Inline) Code and File Comparison.</strong>
+</p>
+
+<p align="center">
+  <a href="https://codediffs.vercel.app/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/LAUNCH%20LIVE%20APPLICATION-codediffs.vercel.app-10B981?style=for-the-badge&logo=vercel&logoColor=white" height="42" alt="Launch CodeDiff Pro Live" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/jaytailor15/codediff"><b>Official GitHub</b></a> •
+  <a href="https://codediffs.vercel.app/docs"><b>Documentation Portal</b></a> •
+  <a href="#why-codediff-pro"><b>Why CodeDiff Pro</b></a> •
+  <a href="#key-features-and-developer-capabilities"><b>Key Features</b></a> •
+  <a href="#detailed-step-by-step-installation-guide"><b>Installation Guide</b></a> •
+  <a href="#technical-stack-and-symmetrical-versioning"><b>Tech Stack</b></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/jaytailor15/codediff"><img src="https://img.shields.io/badge/Open%20Source-Cohesive-115e59?style=for-the-badge&logo=github" alt="Open Source" /></a>
+  <a href="https://codediffs.vercel.app/docs"><img src="https://img.shields.io/badge/License-Restrictive%20OS-115e59?style=for-the-badge" alt="License" /></a>
+  <a href="#local-sandbox-and-privacy-protocol"><img src="https://img.shields.io/badge/Privacy-100%25%20Local%20Sandbox-115e59?style=for-the-badge" alt="Privacy" /></a>
+  <img src="https://img.shields.io/badge/Next.js-15.5.18-black?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.4.17-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Monaco_Editor-4.7.0-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="Monaco" />
+  <img src="https://img.shields.io/badge/Redis-Database%20Sharing-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" />
+  <img src="https://img.shields.io/badge/Google_Translate-Dynamic%20Localization-4285F4?style=for-the-badge&logo=googletranslate&logoColor=white" alt="Google Translate" />
+  <img src="https://img.shields.io/badge/Vercel-Deployment-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+</p>
 
 ---
 
-## Symmetrical Brand Identity & Logo Philosophy
+## Why CodeDiff Pro?
+
+**CodeDiff Pro** is a production-grade, high-fidelity developer workspace built for rapid side-by-side (split) and unified (inline) code comparison. Engineered with complete **client-side sandboxing**, **dynamic Monaco Editor sizing**, and a beautiful theme-reactive layout, CodeDiff Pro ensures your proprietary code is parsed safely, symmetrically, and efficiently entirely inside your browser environment.
+
+Featuring integration with the **Google Translate Localization Engine**, CodeDiff Pro allows developers globally to localize the entire workspace interface into 50+ Indian and foreign languages with custom flags, while locking comparison canvases and Monaco text boxes inside translation protection buffers to protect your code integrity.
+
+---
+
+## Key Features and Developer Capabilities
+
+*   **Symmetrical Dual Monaco Editors**: Full syntax highlighting, auto-completions, and folding options for JavaScript, TypeScript, Python, HTML, CSS, JSON, YAML, and 40+ languages.
+*   **Synchronous Dual-Scroll Engine**: True side-by-side split visual diff highlighting with interactive pixel-perfect alignment.
+*   **Unified Inline Diff Viewer**: Switch instantly to a single-column inline diff layout featuring beautiful addition and removal highlights.
+*   **Zero-Server Privacy Sandbox**: File reading, comparisons, and layout state configurations are kept strictly client-side inside the local browser context.
+*   **Dynamic Language Localization**: On-the-fly UI switching for dozens of languages (including Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Urdu, French, German, Spanish, Japanese, and Mandarin).
+*   **Advanced Git and Diff Analysis**: Moved code block detection, duplicated code search, custom white-space/case ignore filters, and clean clipboard patch copying.
+*   **LZW Compressed Share Protocol**: Encodes comparison state into compact sharing links stored inside a high-speed Redis DB using random, cryptographic 16-character keys.
+
+---
+
+## Symmetrical Brand Identity and Logo Philosophy
 
 The brand identity and favicon represent the core visual mechanics of code differences:
-- **Emerald Green Check Mark (`#10b981`)**: Represents successful code additions and clean insertions. It begins with a vertical top-left entry, sweeping downwards before ascending diagonally.
-- **Vibrant Red Reverse Check Mark (`#ef4444`)**: Represents code deletions and clean removals. It begins with a diagonal descent and transitions into a clean vertical exit.
-- **Centered Outline Circle (`#e2e8f0`)**: Positioned at the precise geometric center `(32, 32)` with an overlapping radius of `8`, it represents unified cohesion. A transparent interior ensures the parallel green and red line paths pass continuously and visibly through the circle, reflecting complete transparency and local execution.
+*   **Emerald Green Check Mark (`#10b981`)**: Represents successful code additions and clean insertions. It begins with a vertical top-left entry, sweeping downwards before ascending diagonally.
+*   **Vibrant Red Reverse Check Mark (`#ef4444`)**: Represents code deletions and clean removals. It begins with a diagonal descent and transitions into a clean vertical exit.
+*   **Centered Outline Circle (`#e2e8f0`)**: Positioned at the precise geometric center `(32, 32)` with an overlapping radius of `8`, it represents unified cohesion. A transparent interior ensures the parallel green and red line paths pass continuously and visibly through the circle, reflecting complete transparency and local execution.
 
 ---
 
-## Interface Overview & Screenshots
+## Interface Overview and Screen Previews
 
-The application consists of six main premium UI modules.
+The application consists of six premium user-interface modules, polished down to the last pixel.
 
 ### 1. Main Symmetrical Editor Interface
 ![Main Symmetrical Editor Interface](./public/screenshots/workspace_comparison.png)
@@ -44,8 +86,8 @@ The application consists of six main premium UI modules.
 ![Symmetrical Comparison Inspector](./public/screenshots/workspace_metrics.png)
 *Figure 3: Live Inspector panel displaying total changed lines, additions, removals, and total output lines alongside custom quick actions for canvas clearing and patch copying.*
 
-### 4. Advanced Git & Rich Diff Analysis
-![Advanced Git & Rich Diff Analysis](./public/screenshots/git_analysis.png)
+### 4. Advanced Git and Rich Diff Analysis
+![Advanced Git and Rich Diff Analysis](./public/screenshots/git_analysis.png)
 *Figure 4: Advanced Git analysis dashboard including precise moved code block tracking, duplicated paste block discovery, and bulk pattern replacements.*
 
 ### 5. High-Contrast Symmetrical Diff Viewer
@@ -64,9 +106,9 @@ Follow these steps to configure, build, and deploy CodeDiff Pro on your local ma
 
 ### Step 1: Verify System Prerequisites
 Before cloning, ensure you have Node.js and npm installed on your machine.
-- **Node.js**: Version `18.x` or higher (Version `20.x` or `22.x` Recommended)
-- **npm**: Version `9.x` or higher
-- **Git**: Installed and configured on your system shell
+*   **Node.js**: Version `18.x` or higher (Version `20.x` or `22.x` Recommended)
+*   **npm**: Version `9.x` or higher
+*   **Git**: Installed and configured on your system shell
 
 Run the following commands in your terminal to verify your local runtime environment:
 ```bash
@@ -76,7 +118,7 @@ git --version
 ```
 
 ### Step 2: Clone the Official Repository
-Open your terminal and execute git clone to copy the codebase. Ensure you pull from the official repository under Jay Tailor's space:
+Open your terminal and execute `git clone` to copy the codebase. Ensure you pull from the official repository under Jay Tailor's space:
 ```bash
 git clone https://github.com/jaytailor15/codediff.git
 cd codediff
@@ -91,22 +133,22 @@ npm install
 
 ### Step 4: Configure Local Environment Variables
 Branding, repository paths, and global sharing credentials are controlled via standard environment variables.
-1. Duplicate the `.env.example` file:
-   ```bash
-   cp .env.example .env
-   ```
-2. Open `.env` and verify/adjust the parameters:
-   ```env
-   NEXT_PUBLIC_APP_NAME="CodeDiff Pro"
-   NEXT_PUBLIC_APP_VERSION="1.4.3"
-   NEXT_PUBLIC_REPO_URL="https://github.com/jaytailor15/codediff"
-   REDIS_URL="redis://default:k87Fz3tHxwPesB1f1VVGmiykUz5ff9u4@yarn-salt-day-86323.db.redis.io:12001"
-   ```
-3. Parameters:
-   - `NEXT_PUBLIC_APP_NAME`: Controls all page HTML titles, branding labels, and workspace headings.
-   - `NEXT_PUBLIC_APP_VERSION`: Sets the dynamic version tags inside the headers, sidebar configurations, and release notes.
-   - `NEXT_PUBLIC_REPO_URL`: Directs the "GitHub Repository" and "Open Source" buttons in the navigation bar to your repository space.
-   - `REDIS_URL`: The connection string for your global Redis database, used to store comparison payloads and generate secure, shortened 16-character sharing links across different PCs.
+1.  Duplicate the `.env.example` file:
+    ```bash
+    cp .env.example .env
+    ```
+2.  Open `.env` and verify/adjust the parameters:
+    ```env
+    NEXT_PUBLIC_APP_NAME="CodeDiff Pro"
+    NEXT_PUBLIC_APP_VERSION="1.5.0"
+    NEXT_PUBLIC_REPO_URL="https://github.com/jaytailor15/codediff"
+    REDIS_URL="redis://default:k87Fz3tHxwPesB1f1VVGmiykUz5ff9u4@yarn-salt-day-86323.db.redis.io:12001"
+    ```
+3.  Parameters:
+    *   `NEXT_PUBLIC_APP_NAME`: Controls all page HTML titles, branding labels, and workspace headings.
+    *   `NEXT_PUBLIC_APP_VERSION`: Sets the dynamic version tags inside the headers, sidebar configurations, and release notes.
+    *   `NEXT_PUBLIC_REPO_URL`: Directs the "GitHub Repository" and "Open Source" buttons in the navigation bar to your repository space.
+    *   `REDIS_URL`: The connection string for your global Redis database, used to store comparison payloads and generate secure, shortened 16-character sharing links across different PCs.
 
 ### Step 5: Launch the Development Server
 Execute the Next.js local development script. The server will start and hot-reload changes on save:
@@ -142,13 +184,13 @@ npm run start
 
 ---
 
-## Technical Stack & Symmetrical Versioning
+## Technical Stack and Symmetrical Versioning
 
 CodeDiff Pro is structured strictly using Next.js App Router architectures and strict types.
 
 | Library / Dependency | Visual Badge / Tag | Dynamic Version | Technical Utility |
 | :--- | :--- | :--- | :--- |
-| **Next.js (App Router)** | ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=nextdotjs&logoColor=white) | `15.3.3` | App Router framework, layout engines, and dynamic API routing |
+| **Next.js (App Router)** | ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=nextdotjs&logoColor=white) | `15.5.18` | App Router framework, layout engines, and dynamic API routing |
 | **React** | ![React](https://img.shields.io/badge/React-blue?style=flat-square&logo=react&logoColor=white) | `19.1.0` | React Server Components, client state trees, and hook lifecycles |
 | **TypeScript** | ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white) | `5.8.3` | Strict-mode compile checks, type interfaces, and system contracts |
 | **Tailwind CSS** | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white) | `3.4.17` | Symmetrical glassmorphic design tokens and responsive classes |
@@ -164,29 +206,29 @@ CodeDiff Pro is structured strictly using Next.js App Router architectures and s
 
 ---
 
-## Local Sandbox & Privacy Protocol
+## Local Sandbox and Privacy Protocol
 
 ### Client-Side Execution Sandbox
 All file uploads, text inputs, ignorable difference transformations, and patch processing occur entirely inside your browser's execution sandbox.
-- **Zero Raw Data Transfers**: No source code snippets, character metrics, or comparison logs are transmitted to external databases, tracking systems, or cloud nodes unless you explicitly choose to create a shortened sharing link.
-- **Client-Side Storage**: Preserves custom layout states (like font sizing, word-wrap toggles, and recent comparison cards) using standard local Web Storage APIs (Local Storage).
-- **Cookie-Free Experience**: The system does not write tracking cookies or integrate analytical scripts.
+*   **Zero Raw Data Transfers**: No source code snippets, character metrics, or comparison logs are transmitted to external databases, tracking systems, or cloud nodes unless you explicitly choose to create a shortened sharing link.
+*   **Client-Side Storage**: Preserves custom layout states (like font sizing, word-wrap toggles, and recent comparison cards) using standard local Web Storage APIs (Local Storage).
+*   **Cookie-Free Experience**: The system does not write tracking cookies or integrate analytical scripts.
 
 ### Secure Database Sharing Protocol
 When you click **Share**, CodeDiff Pro allows you to optionally save your comparison workspace to a secure cloud database to generate an ultra-short 16-character link:
-- **16-Character Cryptographic Slugs**: Comparison payloads are stored in the global Redis database and indexed under cryptographically random, 16-character slugs (`crypto.randomBytes`) to prevent key guessing or enumeration.
-- **UTF-8 LZW Compression**: Workspace contents are compressed using a robust, custom LZW byte encoder before transmission to minimize database storage footprints and maximize transmission speeds.
-- **30-Day Auto-Expiration (TTL)**: To respect resources and protect data lifecycles, all shared database records are configured with an automatic 30-day expiration (`EX: 2592000` seconds).
-- **Offline Fallback**: If the cloud database is ever offline, the share action gracefully degrades to generating a direct LZW client-compressed query link, ensuring link sharing is always fully functional.
+*   **16-Character Cryptographic Slugs**: Comparison payloads are stored in the global Redis database and indexed under cryptographically random, 16-character slugs (`crypto.randomBytes`) to prevent key guessing or enumeration.
+*   **UTF-8 LZW Compression**: Workspace contents are compressed using a robust, custom LZW byte encoder before transmission to minimize database storage footprints and maximize transmission speeds.
+*   **30-Day Auto-Expiration (TTL)**: To respect resources and protect data lifecycles, all shared database records are configured with an automatic 30-day expiration (`EX: 2592000` seconds).
+*   **Offline Fallback**: If the cloud database is ever offline, the share action gracefully degrades to generating a direct LZW client-compressed query link, ensuring link sharing is always fully functional.
 
 ---
 
 ## License Agreement
 
 This codebase is released under a **Restrictive Open Source License** held exclusively by **Jay Tailor (@jaytailor15)**:
-- **Repository Rights**: Cloning or copying this repository is permitted **strictly** for contributing features, performance updates, bug fixes, or security patches back to the official repository via Pull Requests.
-- **Cloning Restrictions**: Under no circumstances may any contributor, third-party user, or organization copy, download, or distribute this codebase to host it as a private repository, commercial SaaS wrapper, or proprietary product.
-- **Ownership Privilege**: **Jay Tailor** is the single author, founder, and owner of the repository, holding absolute administrative access, licensing control, and distribution rights.
+*   **Repository Rights**: Cloning or copying this repository is permitted **strictly** for contributing features, performance updates, bug fixes, or security patches back to the official repository via Pull Requests.
+*   **Cloning Restrictions**: Under no circumstances may any contributor, third-party user, or organization copy, download, or distribute this codebase to host it as a private repository, commercial SaaS wrapper, or proprietary product.
+*   **Ownership Privilege**: **Jay Tailor** is the single author, founder, and owner of the repository, holding absolute administrative access, licensing control, and distribution rights.
 
 ---
 
@@ -194,30 +236,47 @@ This codebase is released under a **Restrictive Open Source License** held exclu
 
 Please adhere strictly to these commit guidelines to maintain clean Git history and stable builds:
 
-1. **Branch Naming**: Match your branch name to the contribution category:
-   - Features: `feature/your-feature-name`
-   - Bug Fixes: `bugfix/your-bugfix-name`
-   - Refactoring: `refactor/your-refactor-name`
-2. **Quality Verification**: Ensure that running `npm run typecheck` and `npm run lint` yields zero diagnostics. PRs that trigger build failures will not be reviewed.
-3. **Commit Messages**: Symmetrical, descriptive commit messages are required:
-   ```text
-   feat: add option to customize tab size inside monaco editor
-   fix: adjust font size numeric text box width to resolve flex clipping
-   docs: expand keyboard shortcuts reference page with monaco commands
-   ```
-4. **Pull Requests**: Open your PR targeting the `development` branch. Outline the changes made, validation steps taken, and attach interface screenshots where applicable.
+1.  **Branch Naming**: Match your branch name to the contribution category:
+    *   Features: `feature/your-feature-name`
+    *   Bug Fixes: `bugfix/your-bugfix-name`
+    *   Refactoring: `refactor/your-refactor-name`
+2.  **Quality Verification**: Ensure that running `npm run typecheck` and `npm run lint` yields zero diagnostics. PRs that trigger build failures will not be reviewed.
+3.  **Commit Messages**: Symmetrical, descriptive commit messages are required:
+    ```text
+    feat: add option to customize tab size inside monaco editor
+    fix: adjust font size numeric text box width to resolve flex clipping
+    docs: expand keyboard shortcuts reference page with monaco commands
+    ```
+4.  **Pull Requests**: Open your PR targeting the `development` branch. Outline the changes made, validation steps taken, and attach interface screenshots where applicable.
 
 ---
 
-## Support & Sponsorship
+## Support and Sponsorship
 
 CodeDiff Pro is **100% free and open-source**. There are no premium paywalls, payment processing hooks, or subscription models built into this application.
 
 If CodeDiff Pro saves you development time, simplifies complex Git code reviews, or enhances your refactoring workflow, sponsorships are welcomed!
 
 ### How to Sponsor:
-- Visit the GitHub profile of the author and founder: [@jaytailor15](https://github.com/jaytailor15).
-- Sponsorship partnerships and support integrations are warmly welcomed. Contact **Jay Tailor** directly in the official repository discussions to collaborate.
+*   Visit the GitHub profile of the author and founder: [@jaytailor15](https://github.com/jaytailor15).
+*   Sponsorship partnerships and support integrations are warmly welcomed. Contact **Jay Tailor** directly in the official repository discussions to collaborate.
+
+---
+
+## High-Performance SEO and GitHub Search Discoverability
+
+To maximize indexing visibility and search discoverability across global developer networks (Google, Bing, GitHub search index), this repository is structurally optimized for the following search parameters:
+
+### Recommended GitHub Repository Topics (Tags)
+To ensure top repository ranking, configure your GitHub repository settings to include these topics:
+`diff-checker`, `code-compare`, `file-comparison`, `monaco-editor`, `git-diff`, `visual-diff`, `code-editor`, `nextjs`, `react-19`, `tailwind-css`, `lzw-compression`, `redis`, `google-translate`, `translation`, `developer-tools`, `online-diff-tool`, `privacy-first`, `web-diff`
+
+### Crawlable Keyword Glossary and Category Index
+*   **Primary Search Intents**: Symmetrical Online Code Diff Checker, Split and Inline File Comparison, side-by-side difference viewer, online code editor.
+*   **Dynamic Localization**: Dynamic Google Translate localization, regional Indian languages (Hindi, Marathi, Bengali, Tamil, Telugu, Kannada, Gujarati), and global foreign languages.
+*   **Privacy and Security**: 100% Client-side sandbox privacy, local file comparisons, cookie-free browser environments.
+*   **Core Technology Stack**: Next.js 15, React 19, Tailwind CSS 3, Monaco Editor, Zustand state logs, Framer Motion micro-animations.
+*   **Live Deployment URL**: [https://codediffs.vercel.app/](https://codediffs.vercel.app/)
 
 ---
 
