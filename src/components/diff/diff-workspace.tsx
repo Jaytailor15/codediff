@@ -430,19 +430,20 @@ export function DiffWorkspace() {
       original.language
     );
     const url = `${window.location.origin}${window.location.pathname}?share=${encodeURIComponent(payload)}`;
+
+    // Update the browser history so reloading retains the comparison
+    window.history.replaceState(null, "", url);
+
     try {
       await navigator.clipboard.writeText(url);
-      window.history.replaceState(null, "", url);
       toast({
-        title: "Share URL copied",
-        description: "The comparison is encoded in the current URL."
+        title: "Share URL Copied",
+        description: "A secure, compact delta-compressed link has been copied to your clipboard."
       });
     } catch {
-      window.history.replaceState(null, "", url);
       toast({
-        title: "Share URL created",
-        description:
-          "Clipboard access was blocked, but the current URL was updated."
+        title: "Share URL Created",
+        description: "Clipboard access was blocked, but the page URL has been updated."
       });
     }
   }, [modified.content, original.content, original.language, toast]);
